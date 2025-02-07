@@ -30,7 +30,7 @@ const SidebarPostButton = () => {
     return null; // or some fallback UI
   }
 
-  // console.log("The data is : ",data)
+  // console.log("The data is : ",data.user.image)
 
   return (
     <>
