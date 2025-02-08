@@ -1,6 +1,6 @@
 import useRegisterModal from "@/hooks/useRegisterModal";
-import { registerStep1Schema } from "@/lib/validation";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { registerStep1Schema, registerStep2Schema } from "@/lib/validation";
+import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +15,7 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import Modal from "../ui/modal";
 
 interface dataProps {
   name: string;
@@ -27,6 +28,10 @@ const RegisterModal = () => {
 
   const registerModel = useRegisterModal();
 
+  const onToggle = useCallback(()=>{
+    registerModel.onClose()
+  },[registerModel])
+
   const bodyContent =
     step == 1 ? (
       <RegisterStep1 setData={setData} setStep={setStep} />
@@ -34,7 +39,30 @@ const RegisterModal = () => {
       <RegisterStep2 data={data} />
     );
 
-  return <div></div>;
+    const footer = (
+      <div className="text-neutral-400 text-center mb-4">
+        <p>
+          Already have an account?{" "}
+          <span className="text-white cursor-pointer hover:underline"
+          onClick={onToggle}
+          >
+            Sign in
+          </span>
+
+        </p>
+      </div>
+    )
+
+  return (
+    <Modal
+      body={bodyContent}
+      footer={footer}
+      isOpen={registerModel.isOpen}
+      onClose={registerModel.onClose}
+      step={step}
+      totalSteps={2}
+    />
+  );
 };
 
 export default RegisterModal;
@@ -58,11 +86,14 @@ function RegisterStep1({
 
   const { isSubmitting } = form.formState;
 
-  const onSubmit = async (values: z.infer<typeof registerStep1Schema>) => {};
+  const onSubmit = async (values: z.infer<typeof registerStep1Schema>) => {
+    setData(values);
+    setStep(2);
+  };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-10">
         {error && (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -108,22 +139,25 @@ function RegisterStep1({
 
 function RegisterStep2({ data}: any) {
     const [error, useError] = useState("");
+    const registerModel = useRegisterModal()
   
-    const form = useForm<z.infer<typeof registerStep1Schema>>({
-      resolver: zodResolver(registerStep1Schema),
+    const form = useForm<z.infer<typeof registerStep2Schema>>({
+      resolver: zodResolver(registerStep2Schema),
       defaultValues: {
-        email: "",
-        name: "",
+        password: "",
+        username: "",
       },
     });
   
     const { isSubmitting } = form.formState;
   
-    const onSubmit = async (values: z.infer<typeof registerStep1Schema>) => {};
+    const onSubmit = async (values: z.infer<typeof registerStep1Schema>) => {
+      registerModel.onClose()
+    };
   
     return (
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-10">
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -134,11 +168,11 @@ function RegisterStep2({ data}: any) {
   
           <FormField
             control={form.control}
-            name="name"
+            name="password"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Name" {...field} />
+                  <Input placeholder="Password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -147,11 +181,11 @@ function RegisterStep2({ data}: any) {
   
           <FormField
             control={form.control}
-            name="email"
+            name="username"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Email" {...field} />
+                  <Input placeholder="Username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -159,7 +193,7 @@ function RegisterStep2({ data}: any) {
           />
   
           <Button disabled={isSubmitting} type="submit" className="w-full">
-            Next
+            Register
           </Button>
         </form>
       </Form>
