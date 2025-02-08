@@ -6,6 +6,7 @@ import { Button } from '../ui/button'
 import { signIn } from 'next-auth/react'
 import useRegisterModal from '@/hooks/useRegisterModal'
 import RegisterModal from '../modals/registerModal'
+import LoginModal from '../modals/loginModal'
 
 
 const Auth = () => {
@@ -21,7 +22,7 @@ const Auth = () => {
   return (
     <>
       <RegisterModal />
-      {/* <LoginModal /> */}
+      <LoginModal />
       <div className="grid grid-cols-1 md:grid-cols-2 items-center h-screen">
         <Image
           src={"/images/x.svg"}

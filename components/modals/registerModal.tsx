@@ -16,6 +16,7 @@ import { AlertCircle } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Modal from "../ui/modal";
+import useLoginModal from "@/hooks/useLoginModal";
 
 interface dataProps {
   name: string;
@@ -27,10 +28,12 @@ const RegisterModal = () => {
   const [data, setData] = useState<dataProps>({ name: "", email: "" });
 
   const registerModel = useRegisterModal();
+  const loginModal = useLoginModal();
 
   const onToggle = useCallback(()=>{
-    registerModel.onClose()
-  },[registerModel])
+    registerModel.onClose();
+    loginModal.onOpen();
+  },[registerModel,loginModal])
 
   const bodyContent =
     step == 1 ? (
@@ -199,3 +202,4 @@ function RegisterStep2({ data}: any) {
       </Form>
     );
   }
+  
