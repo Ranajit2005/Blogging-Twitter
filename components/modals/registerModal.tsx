@@ -17,6 +17,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Modal from "../ui/modal";
 import useLoginModal from "@/hooks/useLoginModal";
+import axios from  "axios";
 
 interface dataProps {
   name: string;
@@ -90,8 +91,25 @@ function RegisterStep1({
   const { isSubmitting } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof registerStep1Schema>) => {
-    setData(values);
-    setStep(2);
+
+    try {
+
+      const { data } = await axios.post("/api/auth/register?step=1", values);
+
+      if(data.success){
+        setData(values);
+        setStep(2);
+      }
+      
+    } catch (error : any) {
+
+      if(error.response.data.error){
+        useError(error.response.data.error)
+        
+      }else{
+        useError("Something went wrong")
+      }
+    }
   };
 
   return (
