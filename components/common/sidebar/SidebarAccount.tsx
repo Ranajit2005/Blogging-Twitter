@@ -30,7 +30,7 @@ const SidebarPostButton = () => {
     return null; // or some fallback UI
   }
 
-  // console.log("The data is : ",data.user.image)
+  console.log("The data image is : ",data?.user?.image)
 
   return (
     <>
@@ -50,7 +50,7 @@ const SidebarPostButton = () => {
             <div className="flex gap-2 items-center">
               <Avatar>
                 <AvatarImage src={data?.user?.image} />
-                <AvatarFallback>{data?.user?.name}</AvatarFallback>
+                <AvatarFallback>{data?.user?.name[0].toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col items-start text-white">
                 <p>{data?.user?.name}</p>

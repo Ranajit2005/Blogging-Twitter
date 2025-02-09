@@ -18,6 +18,7 @@ import { Button } from "../ui/button";
 import Modal from "../ui/modal";
 import useLoginModal from "@/hooks/useLoginModal";
 import axios from  "axios";
+import { signIn } from "next-auth/react";
 
 interface dataProps {
   name: string;
@@ -78,7 +79,7 @@ function RegisterStep1({
   setData: Dispatch<SetStateAction<{ name: string; email: string }>>;
   setStep: Dispatch<SetStateAction<number>>;
 }) {
-  const [error, useError] = useState("");
+  const [error, setError] = useState("");
 
   const form = useForm<z.infer<typeof registerStep1Schema>>({
     resolver: zodResolver(registerStep1Schema),
@@ -94,20 +95,22 @@ function RegisterStep1({
 
     try {
 
-      const { data } = await axios.post("/api/auth/register?step=1", values);
+      const { data } = await axios.post("http://localhost:3000/api/auth/register?step=1", values);
 
       if(data.success){
         setData(values);
         setStep(2);
       }
       
+
     } catch (error : any) {
 
       if(error.response.data.error){
-        useError(error.response.data.error)
-        
+        setError(error.response.data.error) 
+        console.log(error)
       }else{
-        useError("Something went wrong")
+        // setError("Something went wrong")
+        console.log(error)
       }
     }
   };
@@ -160,7 +163,7 @@ function RegisterStep1({
 
 function RegisterStep2({ data}: any) {
 
-    const [error, useError] = useState("");
+    const [error, setError] = useState("");
     const registerModel = useRegisterModal()
   
     const form = useForm<z.infer<typeof registerStep2Schema>>({
@@ -173,8 +176,31 @@ function RegisterStep2({ data}: any) {
   
     const { isSubmitting } = form.formState;
   
-    const onSubmit = async (values: z.infer<typeof registerStep1Schema>) => {
-      registerModel.onClose()
+    const onSubmit = async (values: z.infer<typeof registerStep2Schema>) => {
+      
+      try {
+        const {data: response} = await axios.post("/api/auth/register?step=2",{
+          ...data,
+          ...values,
+        });
+
+          
+          if (response.success) {
+            signIn("credentials", {
+              email: data.email,
+              password: values.password,
+            });
+              registerModel.onClose()
+        }
+
+      } catch (error) {
+        if (error.response.data.error) {
+          setError(error.response.data.error);
+        } else {
+          setError("Something went wrong");
+        }
+      }
+
     };
   
     return (

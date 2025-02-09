@@ -1,7 +1,7 @@
 import { connectionDatabase } from "@/lib/connection";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
-import { hash } from "bcrypt"
+import { hash } from "bcryptjs"
 
 export async function POST(req:Request) {
     
@@ -16,9 +16,9 @@ export async function POST(req:Request) {
         if(step == "1"){
 
             const { email } = await req.json();
-            const isExixtingUser = await User.findOne({ email })
+            const isExistingUser = await User.findOne({ email })
 
-            if(isExixtingUser){
+            if(isExistingUser){
                 return NextResponse.json({
                     error: "Email already exist",
                 }, { status: 400 });
@@ -58,7 +58,7 @@ export async function POST(req:Request) {
         }
        
     } catch (error) {
-
+        console.log(error);
         const result = error as Error;
         return NextResponse.json({
             error: result.message,
