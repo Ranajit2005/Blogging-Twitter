@@ -95,6 +95,7 @@ const LoginModal = () => {
       );
 
     return (
+        
         <Modal
             body={bodyContent}
             footer={footer}

@@ -141,6 +141,7 @@ function RegisterStep1({
 
 
 function RegisterStep2({ data}: any) {
+
     const [error, useError] = useState("");
     const registerModel = useRegisterModal()
   
