@@ -11,6 +11,8 @@ import { AlertCircle } from 'lucide-react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import useRegisterModal from '@/hooks/useRegisterModal';
+import axios from 'axios';
+import { signIn } from 'next-auth/react';
 
 const LoginModal = () => {
 
@@ -30,6 +32,28 @@ const LoginModal = () => {
       const { isSubmitting } = form.formState;
 
       const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+
+        try {
+
+          const { data } = await axios .post("http://localhost:3000/api/auth/login", values);
+    
+          if(data.success){
+            signIn("credentials",values); 
+            loginModal.onClose();
+          }
+          
+    
+        } catch (error : any) {
+    
+          if(error.response.data.error){
+            setError(error.response.data.error) 
+            console.log(error)
+          }else{
+            setError("Something went wrong")
+            console.log(error)
+          }
+        }
+
         loginModal.onClose();
       }
 
