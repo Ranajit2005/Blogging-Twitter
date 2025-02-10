@@ -109,7 +109,7 @@ function RegisterStep1({
         setError(error.response.data.error) 
         console.log(error)
       }else{
-        // setError("Something went wrong")
+        setError("Something went wrong")
         console.log(error)
       }
     }
