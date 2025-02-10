@@ -1,35 +1,52 @@
-import Auth from '@/components/common/Auth';
-import Sidebar from '@/components/common/Sidebar';
-import { getAuthOptions } from '@/lib/authOptions';
-import React from 'react'
+import Auth from "@/components/common/Auth";
+import Sidebar from "@/components/common/Sidebar";
+import { Toaster } from "@/components/ui/toaster";
+import { getAuthOptions } from "@/lib/authOptions";
+import React from "react";
+import NextTopLoader from "nextjs-toploader";
+import FollowUser from "@/components/FollowUser";
 
-
-interface Props{
+interface Props {
   children: React.ReactNode;
 }
 
-const Homelayout = async ({children} : Props) => {
+const Homelayout = async ({ children }: Props) => {
+  const session: any = await getAuthOptions();
 
-  const session : any = await getAuthOptions();
-
-  if(!session){
+  if (!session) {
     return (
-      <div className='container h-screen mx-auto max-w-7xl'>
+      <div className="container h-screen mx-auto max-w-7xl">
         <Auth />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="lg:container h-screen mx-auto lg:max-w-7xl">
+      <div className="flex">
+        <Sidebar user={JSON?.parse(JSON.stringify(session?.currentUser))} />
+        <div className="flex flex-1 border-x-[1px] border-neutral-800 lg:mx-4 ml-1">
+          <div className="w-full">
+            <NextTopLoader
+              color="#2299DD"
+              initialPosition={0.08}
+              crawlSpeed={200}
+              height={3}
+              crawl={true}
+              showSpinner={false}
+              easing="ease"
+              speed={200}
+              shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+            />
 
-      <div>
-        <Sidebar user={JSON?.parse(JSON.stringify(session?.currentUser))}/>
-        {/* sidebar */}
+            {children}
+            <Toaster />
+          </div>
+        </div>
+        <FollowUser/>
       </div>
-      {children}
     </div>
-  )
-}
+  );
+};
 
-export default Homelayout
+export default Homelayout;
