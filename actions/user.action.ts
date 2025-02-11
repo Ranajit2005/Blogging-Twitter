@@ -2,14 +2,13 @@
 
 import { getAuthOptions } from "@/lib/authOptions";
 import axios from "axios"
-import { log } from "console";
 
 export const getUsers = async (limit: number) => {
 
     try {
 
         const session: any = await getAuthOptions();
-        const userId = session?.currentUser?.[0]?._id;
+        // const userId = session?.currentUser?.[0]?._id;
         // console.log(session);
 
         // console.log("userid : ",userId);
@@ -17,7 +16,7 @@ export const getUsers = async (limit: number) => {
 
         const { data } = await axios.get(`${process.env.NEXT_PUBLIC_APP_URL}/api/users?limit=${limit}?userId=${session?.currentUser?.[0]?._id}`);
 
-        // console.log("Data is : ",data);
+        console.log("Data is : ",data);
 
         return data;
 

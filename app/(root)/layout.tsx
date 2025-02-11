@@ -52,7 +52,7 @@ const Homelayout = async ({ children }: Props) => {
             <Toaster />
           </div>
         </div>
-        <FollowUser/>
+        <FollowUser users={users}/>
       </div>
     </div>
   );
