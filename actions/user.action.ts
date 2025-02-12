@@ -21,6 +21,7 @@ export const getUsers = async (limit: number) => {
         return data;
 
     } catch (error) {
+
         console.log("user action error",error);
     }
 

@@ -12,7 +12,6 @@ interface Props {
 }
 
 const Homelayout = async ({ children }: Props) => {
-
   const session: any = await getAuthOptions();
   const users = await getUsers(5);
 
@@ -31,9 +30,7 @@ const Homelayout = async ({ children }: Props) => {
       <div className="flex">
         <Sidebar user={JSON?.parse(JSON.stringify(session?.currentUser))} />
         <div className="flex flex-1 border-x-[1px] border-neutral-800 lg:mx-4 ml-1">
-          <div className="w-full">
-
-
+          <div className="w-full ">
             {/* For shoeing uploading we use react hot toast */}
 
             <NextTopLoader
@@ -52,7 +49,7 @@ const Homelayout = async ({ children }: Props) => {
             <Toaster />
           </div>
         </div>
-        <FollowUser users={users}/>
+        <FollowUser users={users} />
       </div>
     </div>
   );

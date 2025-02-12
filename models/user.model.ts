@@ -20,7 +20,7 @@ const UserSchema = new Schema({
         type: String,
         // required: true,
     },
-    coverphoto:{
+    coverPhoto:{
         type: String,
         // default: "",
     },
