@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import Header from '../common/Header'
 import { Loader2 } from 'lucide-react'
+import  Form  from "./From"
 
 const GetPosts = ({
     posts,
@@ -31,7 +32,14 @@ const GetPosts = ({
           <Loader2 className='animate-spin text-sky-500'/>
         </div>
       ):(
-        <></>
+        <>
+          <Form 
+            placeholder="What's on your mind"
+            user = {JSON.parse(JSON.stringify(session.currentUser))}
+            posts={posts}
+          />
+        
+        </>
       )}
 
 
