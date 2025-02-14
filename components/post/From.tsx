@@ -9,7 +9,7 @@ import ProfileImageUpload from './ProfileImageUpload';
 interface Props{
     placeholder : string;
     user : IUser;
-    posts : Dispatch<SetStateAction<IPost[]>>;
+    setPosts : Dispatch<SetStateAction<IPost[]>>;
     postId?:string;
     isComment?:boolean; 
 }
