@@ -4,6 +4,7 @@ import { IPost, IUser } from '@/types';
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { useSession } from 'next-auth/react';
+import ProfileImageUpload from './ProfileImageUpload';
 
 interface Props{
     placeholder : string;
@@ -27,7 +28,10 @@ const From = ({placeholder, user, posts, postId, isComment } : Props) => {
 
     const[text,setText] = useState<string>("")
     const[isLoading,setLoading]= useState(false)
+    const [image,setImage] = useState("")
+
     const onSubmit = () => {}
+    const handleImageUpload = (img : string) => {}
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
@@ -47,6 +51,7 @@ const From = ({placeholder, user, posts, postId, isComment } : Props) => {
             </Avatar>
           )}
       {/* </Avatar> */}
+
       <div className="w-full">
         <textarea
           className="disabled:opacity-80 peer resize-none mt-3 w-full bg-black ring-0 outline-none text-[20px] placeholder-neutral-500 text-white h-[50px]"
@@ -56,16 +61,21 @@ const From = ({placeholder, user, posts, postId, isComment } : Props) => {
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && onSubmit()}
         ></textarea>
+
         <hr className="opacity-0 peer-focus:opacity-100 h-0.5 w-full border-neutral-800 transition" />
-        {/* {!isComment && (
+
+        {!isComment && (
           <ProfileImageUpload
             image={image}
             setImage={setImage}
             onChange={(image: string) => handleImageUpload(image)}
             isPost={true}
           />
-        )} */}
+
+        )}
+
         <div className="mt-4 flex flex-row justify-end">
+
           {/* <Button
             className="px-8"
             disabled={isLoading || !text}
@@ -73,6 +83,7 @@ const From = ({placeholder, user, posts, postId, isComment } : Props) => {
           >
             {isComment ? "Reply" : "Post"}
           </Button> */}
+
         </div>
       </div>
     </div>
