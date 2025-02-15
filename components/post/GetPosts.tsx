@@ -36,7 +36,6 @@ const GetPosts = ({
           <Form 
             placeholder="What's on your mind"
             user = {JSON.parse(JSON.stringify(session.currentUser))}
-            posts={posts}
             setPosts={setPostList}
           />
         

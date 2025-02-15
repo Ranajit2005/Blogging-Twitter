@@ -5,6 +5,10 @@ import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { useSession } from 'next-auth/react';
 import ProfileImageUpload from './ProfileImageUpload';
+import { Button } from '../ui/button';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+
 
 interface Props{
     placeholder : string;
@@ -14,10 +18,16 @@ interface Props{
     isComment?:boolean; 
 }
 
-const From = ({placeholder, user, posts, postId, isComment } : Props) => {
+const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
+
+    const router = useRouter();
+
+    const[text,setText] = useState<string>("")
+    const[isLoading,setIsLoading]= useState(false)
+    const [image,setImage] = useState("")
 
     // console.log("The user name is :->",user[0]?.name[0].toUpperCase())
-    console.log("The user is :->",user)
+    // console.log("The user is :->",user)
     // console.log("The user is :->",user.profilePhoto)
 
     const { data } = useSession();
@@ -26,12 +36,27 @@ const From = ({placeholder, user, posts, postId, isComment } : Props) => {
     }
     // console.log("The data image is : ",data?.user?.image)
 
-    const[text,setText] = useState<string>("")
-    const[isLoading,setLoading]= useState(false)
-    const [image,setImage] = useState("")
+    const onSubmit = async () => {
+      try {
+        setIsLoading(true);
+        if(isComment){
 
-    const onSubmit = () => {}
-    const handleImageUpload = (img : string) => {}
+        }else{
+          const {data} = await axios.post("/api/post",{text,image,userId:user?._id})
+        }
+
+
+      } catch (error) {
+        
+      }
+    }
+
+    const handleImageUpload = (img : string) => {
+      setIsLoading(true);
+      setImage(img);
+
+
+    }
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
@@ -66,8 +91,9 @@ const From = ({placeholder, user, posts, postId, isComment } : Props) => {
 
         {!isComment && (
           <ProfileImageUpload
-            image={image}
-            setImage={setImage}
+            // image={image}
+            // setImage={setImage}
+            profileImage={image}
             onChange={(image: string) => handleImageUpload(image)}
             isPost={true}
           />
@@ -76,13 +102,13 @@ const From = ({placeholder, user, posts, postId, isComment } : Props) => {
 
         <div className="mt-4 flex flex-row justify-end">
 
-          {/* <Button
+          <Button
             className="px-8"
             disabled={isLoading || !text}
             onClick={onSubmit}
           >
             {isComment ? "Reply" : "Post"}
-          </Button> */}
+          </Button>
 
         </div>
       </div>

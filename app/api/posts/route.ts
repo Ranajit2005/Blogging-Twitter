@@ -1,7 +1,28 @@
 import { connectionDatabase } from "@/lib/connection";
 import Post from "@/models/post.model";
-import User from "@/models/user.model";
 import { NextResponse } from "next/server";
+
+export async function POST(req: Request) {
+
+    try {
+
+        await connectionDatabase();
+        const { text,image,userId } = await req.json();
+
+        const post = await Post.create({text,image,user:userId});
+        
+        return NextResponse.json(post)
+        
+    } catch (error) {
+
+        const result = error as Error;
+        return NextResponse.json({
+            error: result.message
+        }, { status: 400 })
+
+    }
+}
+
 
 export async function GET(req: Request) {
 

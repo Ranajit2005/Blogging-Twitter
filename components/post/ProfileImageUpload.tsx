@@ -1,54 +1,56 @@
-import { Edit2 } from 'lucide-react';
-import Image from 'next/image';
-import React, { useCallback, useState } from 'react'
-import { useDropzone } from 'react-dropzone'
+import { Download, Edit2, ImageDown } from "lucide-react";
+import Image from "next/image";
+import React, { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
 
-interface Props{
-    profileImage: string,
-    onChange: (profileImage: string) => void,
-    isPost?: boolean
+interface Props {
+  profileImage: string;
+  onChange: (profileImage: string) => void;
+  isPost?: boolean;
 }
 
-const ProfileImageUpload = ( {profileImage, onChange, isPost} : Props ) => {
+const ProfileImageUpload = ({ profileImage, onChange, isPost }: Props) => {
+  const [image, setImage] = useState(profileImage);
 
-    const [image,setImage] = useState(profileImage);
+  const handleChange = useCallback(
+    (coverImage: string) => {
+      onChange(coverImage);
+    },
+    [onChange]
+  );
 
-    const handleChange = useCallback((coverImage:string)=>{
-      onChange(coverImage)
-    },[onChange])
-
-    const handleDrop = useCallback((files:any)=>{
-
+  const handleDrop = useCallback(
+    (files: any) => {
       const file = files[0];
       const reader = new FileReader();
 
       reader.onload = (event: any) => {
         setImage(event.target.result);
-        handleChange(event.target?.result)
+        handleChange(event.target?.result);
       };
 
       reader.readAsDataURL(file);
+    },
+    [handleChange]
+  );
 
-    },[handleChange])
-
-    const {getInputProps, getRootProps } = useDropzone({
-      maxFiles : 1,
-      onDrop : handleDrop,
-      accept : {
-        "image/jpeg" : [],
-        "image/png" : [],
-      }
-    })
+  const { getInputProps, getRootProps } = useDropzone({
+    maxFiles: 1,
+    onDrop: handleDrop,
+    accept: {
+      "image/jpeg": [],
+      "image/png": [],
+    },
+  });
 
   return (
     <div
       {...getRootProps({
-          className: "text-white text-center border-none rounded-md",
+        className: "text-white text-center border-none rounded-md",
       })}
     >
       <input {...getInputProps()} />
 
-      {/* <input {...getInputProps()} /> */}
       {image ? (
         isPost ? (
           <div className="relative transition cursor-pointer w-full h-80 border-4 border-black">
@@ -115,7 +117,7 @@ const ProfileImageUpload = ( {profileImage, onChange, isPost} : Props ) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ProfileImageUpload
+export default ProfileImageUpload;
