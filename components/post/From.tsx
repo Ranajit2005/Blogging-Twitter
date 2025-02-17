@@ -8,6 +8,7 @@ import ProfileImageUpload from './ProfileImageUpload';
 import { Button } from '../ui/button';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 
 interface Props{
@@ -21,6 +22,7 @@ interface Props{
 const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
 
     const router = useRouter();
+    const { toast } = useToast();
 
     const[text,setText] = useState<string>("")
     const[isLoading,setIsLoading]= useState(false)
@@ -42,20 +44,46 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
         if(isComment){
 
         }else{
-          const {data} = await axios.post("/api/post",{text,image,userId:user?._id})
+          const {data} = await axios.post("/api/posts",{text,image,userId:user?._id})
+        
+
+          const newPost = {
+            ...data,
+            user,
+            likes : 0,
+            hasLiked : false,
+            comments : 0,
+          }
+
+          setPosts((prev)=> [newPost,...prev] );
+          setImage("");
         }
 
+        setIsLoading(false);
+        setText("");
 
       } catch (error) {
-        
+        setIsLoading(false);
+
+        toast({
+          title: "Error",
+          description: "Something went wrong, please try again",
+          variant: "destructive",
+        });
       }
     }
 
     const handleImageUpload = (img : string) => {
-      setIsLoading(true);
-      setImage(img);
+      try {
+        setIsLoading(true);
+        setImage(img);
 
-
+        router.refresh();
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+      
     }
 
   return (
