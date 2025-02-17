@@ -16,7 +16,7 @@ export const getUsers = async (limit: number) => {
 
         const { data } = await axios.get(`${process.env.NEXT_PUBLIC_APP_URL}/api/users?limit=${limit}?userId=${session?.currentUser?.[0]?._id}`);
 
-        console.log("Data is : ",data);
+        // console.log("Data is : ",data);
 
         return data;
 

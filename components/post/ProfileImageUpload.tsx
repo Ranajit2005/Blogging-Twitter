@@ -4,13 +4,14 @@ import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 interface Props {
-  profileImage: string;
+  image: string;
+  setImage: any;
   onChange: (profileImage: string) => void;
   isPost?: boolean;
 }
 
-const ProfileImageUpload = ({ profileImage, onChange, isPost }: Props) => {
-  const [image, setImage] = useState(profileImage);
+const ProfileImageUpload = ({ image,setImage, onChange, isPost }: Props) => {
+  // const [image, setImage] = useState(profileImage);
 
   const handleChange = useCallback(
     (coverImage: string) => {

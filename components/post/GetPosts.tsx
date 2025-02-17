@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../common/Header'
 import { Loader2 } from 'lucide-react'
 import  Form  from "./From"
+import PostCard from './PostCard'
 
 const GetPosts = ({
     posts,
@@ -22,6 +23,8 @@ const GetPosts = ({
         setPostList(posts);
     },[posts])
 
+    // console.log("From get posts: ",JSON.parse(JSON.stringify(session)));
+
 
   return (
     <>
@@ -35,10 +38,15 @@ const GetPosts = ({
         <>
           <Form 
             placeholder="What's on your mind"
-            user = {JSON.parse(JSON.stringify(session.currentUser))}
+            user = {JSON.parse(JSON.stringify(session))}
             setPosts={setPostList}
           />
-        
+          {posts?.map((post)=>(
+            <PostCard key={post?._id} post={post}
+            user = {JSON.parse(JSON.stringify(session))}
+            setPosts={setPostList}
+            />
+          ))}
         </>
       )}
 

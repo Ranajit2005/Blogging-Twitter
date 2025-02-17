@@ -29,7 +29,9 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
     const [image,setImage] = useState("")
 
     // console.log("The user name is :->",user[0]?.name[0].toUpperCase())
-    // console.log("The user is :->",user)
+    console.log("The user is form from pg1 :->",user)
+    console.log("The user is form from pg2 :->",user?.currentUser?.[0]?._id)
+
     // console.log("The user is :->",user.profilePhoto)
 
     const { data } = useSession();
@@ -38,14 +40,14 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
     }
     // console.log("The data image is : ",data?.user?.image)
 
+    console.log("->",user)
     const onSubmit = async () => {
       try {
         setIsLoading(true);
         if(isComment){
 
         }else{
-          const {data} = await axios.post("/api/posts",{text,image,userId:user?._id})
-        
+          const {data} = await axios.post("/api/posts",{text,image,userId:user?.currentUser?.[0]?._id})
 
           const newPost = {
             ...data,
@@ -99,10 +101,10 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
         ):(
             <Avatar>
             <AvatarImage src={user.profilePhoto} />
-            <AvatarFallback>{user?.name[0].toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{user?.name?.[0]?.toUpperCase()}</AvatarFallback>
             {/* if user gives error, then use user[0].name[0].toUpperCase() */}
             </Avatar>
-          )}
+           )}
       {/* </Avatar> */}
 
       <div className="w-full">
@@ -121,7 +123,8 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
           <ProfileImageUpload
             // image={image}
             // setImage={setImage}
-            profileImage={image}
+            image={image}
+            setImage={setImage}
             onChange={(image: string) => handleImageUpload(image)}
             isPost={true}
           />

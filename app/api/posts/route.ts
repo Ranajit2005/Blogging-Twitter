@@ -8,6 +8,7 @@ export async function POST(req: Request) {
 
         await connectionDatabase();
         const { text,image,userId } = await req.json();
+        // console.log("User id is : ",userId)
 
         const post = await Post.create({text,image,user:userId});
         
@@ -36,6 +37,7 @@ export async function GET(req: Request) {
         // console.log("->",searchParams)
 
         const posts = await Post.find({})
+        .populate("user")
         .limit(Number(limit))
         .sort({ createAt: -1 });
 
