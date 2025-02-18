@@ -1,10 +1,12 @@
 import { IPost, IUser } from "@/types";
 import { Heart, Loader2, MessageCircle, Trash2 } from "lucide-react";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { sliceText } from "@/lib/utils";
 import { formatDistanceToNowStrict } from "date-fns";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 interface Props {
   post: IPost;
@@ -12,19 +14,51 @@ interface Props {
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
 }
 
-const PostCard = ({ post, user, serPosts }: Props) => {
+const PostCard = ({ post, user, setPosts }: Props) => {
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data } = useSession();
-  if (!data?.user) {
-    return null; // or some fallback UI
-  }
+  // const { data } = useSession();
+  // if (!data?.user) {
+  //   return null; // or some fallback UI
+  // }
 
   // console.log("from post card : ", post);
-  console.log("check->", post?.user?._id == user?.currentUser[0]?._id)
-  console.log("post details : ",post?.user?._id)
-  console.log("user details",user?.currentUser[0]?._id)
+  // console.log("check->", post?.user?._id == user?.currentUser[0]?._id)
+  // console.log("post details : ",post?.user?._id)
+  // console.log("user details",user?.currentUser[0]?._id)
 
+  const handleLike = async (event:any) => {
+    event.stopPropagation();
+
+    try {
+      setIsLoading(true);
+      await axios.delete(`/api/likes`,{
+        data: {
+          postId:post?._id,
+          userId:user?.currentUser[0]?._id
+        }
+      })
+
+      const updatePost = {
+        ...post,
+        hasLiked: post?.hasLiked ? false : true,
+        likes: post?.hasLiked ? post?.likes - 1 : post?.likes + 1,
+      }
+
+      setPosts((prev)=>prev?.map((item)=>(item?._id === post?._id ? updatePost : item )));
+
+      setIsLoading(false);
+
+
+    } catch (error) {
+      return toast({
+        title: "Error",
+        description: "Something went wrong, please try again leter",
+        variant: "destructive",
+      })
+    }
+  }
 
   return (
     <div className="p-10">
@@ -76,7 +110,7 @@ const PostCard = ({ post, user, serPosts }: Props) => {
           
 
           <div
-            // onClick={handleLike}
+            onClick={handleLike}
             className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
           >
             <Heart size={20} color={post?.hasLiked ? "red" : "gray"} />

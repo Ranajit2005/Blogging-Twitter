@@ -29,8 +29,8 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
     const [image,setImage] = useState("")
 
     // console.log("The user name is :->",user[0]?.name[0].toUpperCase())
-    console.log("The user is form from pg1 :->",user)
-    console.log("The user is form from pg2 :->",user?.currentUser?.[0]?._id)
+    // console.log("The user is form from pg1 :->",user)
+    // console.log("The user is form from pg2 :->",user?.currentUser?.[0]?._id)
 
     // console.log("The user is :->",user.profilePhoto)
 
@@ -40,7 +40,7 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
     }
     // console.log("The data image is : ",data?.user?.image)
 
-    console.log("->",user)
+    // console.log("->",user)
     const onSubmit = async () => {
       try {
         setIsLoading(true);
