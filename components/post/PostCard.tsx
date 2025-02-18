@@ -1,5 +1,5 @@
 import { IPost, IUser } from "@/types";
-import { Heart, Loader2, MessageCircle } from "lucide-react";
+import { Heart, Loader2, MessageCircle, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -20,7 +20,11 @@ const PostCard = ({ post, user, serPosts }: Props) => {
     return null; // or some fallback UI
   }
 
-  console.log("from post card : ", post);
+  // console.log("from post card : ", post);
+  console.log("check->", post?.user?._id == user?.currentUser[0]?._id)
+  console.log("post details : ",post?.user?._id)
+  console.log("user details",user?.currentUser[0]?._id)
+
 
   return (
     <div className="p-10">
@@ -83,7 +87,14 @@ const PostCard = ({ post, user, serPosts }: Props) => {
             <MessageCircle size={20}/>
             <p>{post?.comments?.length || 0}</p>
           </div>
-
+          {post?.user?._id == user?.currentUser[0]?._id && (
+            <div
+              className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
+              // onClick={handleDelete}
+            >
+              <Trash2 size={20} />
+            </div>
+          )}
         </div>
 
       </div>
