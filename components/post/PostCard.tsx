@@ -1,5 +1,5 @@
 import { IPost, IUser } from "@/types";
-import { Loader2 } from "lucide-react";
+import { Heart, Loader2, MessageCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -23,7 +23,7 @@ const PostCard = ({ post, user, serPosts }: Props) => {
   console.log("from post card : ", post);
 
   return (
-    <div>
+    <div className="p-10">
       {isLoading && (
         <div className="absolute inset-0 w-full h-full bg-black opacity-50">
           <div className="flex justify-center items-center h-full">
@@ -32,22 +32,13 @@ const PostCard = ({ post, user, serPosts }: Props) => {
         </div>
       )}
 
-      <div>
-        {/* <Avatar> */}
+      <div className="flex gap-3">
 
-        {user.profilePhoto == undefined ? (
           <Avatar>
-            <AvatarImage src={data?.user?.image} />
-            <AvatarFallback>{data?.user?.name[0].toUpperCase()}</AvatarFallback>
+            <AvatarImage src={post?.user?.image} />
+            <AvatarFallback>{post?.user?.name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
-        ) : (
-          <Avatar>
-            <AvatarImage src={user.profilePhoto} />
-            <AvatarFallback>{user?.name[0].toUpperCase()}</AvatarFallback>
-            {/* if user gives error, then use user[0].name[0].toUpperCase() */}
-          </Avatar>
-        )}
-        {/* </Avatar> */}
+        
 
         <div className="flex items-center gap-2">
           <p className="text-white font-semibold cursor-pointer hover:underline capitalize">
@@ -69,10 +60,30 @@ const PostCard = ({ post, user, serPosts }: Props) => {
       <div>
 
         <p className="text-white mt-1 text-xl" >{post?.text}</p>
-        <div>
-            <img src={post?.image} alt={post?.text} 
-            className="w-full h-full object-cover rounded-md"
+        <div className="w-full h-80 max-h-96 mt-3" >
+            <img 
+              src={post?.image} 
+              alt={post?.text} 
+              className="w-full h-full object-cover rounded-md"
             />
+        </div>
+
+        <div className="flex items-center mt-3 gap-10">
+          
+
+          <div
+            // onClick={handleLike}
+            className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
+          >
+            <Heart size={20} color={post?.hasLiked ? "red" : "gray"} />
+            <p>{post?.likes?.length || 0}</p>
+          </div>
+
+          <div className="flex text-neutral-500 items-center gap-2 cursor-pointer transition hover:text-sky-500">
+            <MessageCircle size={20}/>
+            <p>{post?.comments?.length || 0}</p>
+          </div>
+
         </div>
 
       </div>
