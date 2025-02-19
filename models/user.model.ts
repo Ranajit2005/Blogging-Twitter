@@ -36,6 +36,10 @@ const UserSchema = new Schema({
         type: String,
         // default: "",
     },
+    hasNewNotifications:{
+        type: Boolean,
+        default: false
+    },
     following: [{
         type: Schema.Types.ObjectId,
         ref: "User",

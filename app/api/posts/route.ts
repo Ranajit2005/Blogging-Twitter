@@ -37,6 +37,7 @@ export async function GET(req: Request) {
 
         const posts = await Post.find({})
         .populate("user")
+        .populate("likes")
         .limit(Number(limit))
         .sort({ createAt: -1 });
 

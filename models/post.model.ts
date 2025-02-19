@@ -1,4 +1,5 @@
 import { Schema, model, models } from 'mongoose'
+import { boolean } from 'zod';
 
 const PostSchema = new Schema({
     text: {

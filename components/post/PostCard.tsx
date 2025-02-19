@@ -17,7 +17,7 @@ interface Props {
 const PostCard = ({ post, user, setPosts }: Props) => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-
+  // let redlike = false
   // const { data } = useSession();
   // if (!data?.user) {
   //   return null; // or some fallback UI
@@ -33,12 +33,19 @@ const PostCard = ({ post, user, setPosts }: Props) => {
 
     try {
       setIsLoading(true);
-      await axios.delete(`/api/likes`,{
-        data: {
+      // console.log("Go->")
+      // console.log( 
+      //   "postId:",post?._id,
+      //     "userId:",user?.currentUser[0]?._id,
+      //     "isLike:",post?.hasLiked ? false : true
+      // )
+      await axios.put(`/api/likes`,{
           postId:post?._id,
-          userId:user?.currentUser[0]?._id
-        }
+          userId:user?.currentUser[0]?._id,
+          isLike:post?.hasLiked ? false : true
+        
       })
+      // console.log("Done->")
 
       const updatePost = {
         ...post,
@@ -47,6 +54,12 @@ const PostCard = ({ post, user, setPosts }: Props) => {
       }
 
       setPosts((prev)=>prev?.map((item)=>(item?._id === post?._id ? updatePost : item )));
+
+
+      // if(post?._id == user?.currentUser[0]?._id ){
+      //   redlike = true;
+      //   console.log("Check like : ",post?._id ==user?.currentUser[0]?._id)
+      // }
 
       setIsLoading(false);
 
@@ -59,6 +72,8 @@ const PostCard = ({ post, user, setPosts }: Props) => {
       })
     }
   }
+
+  console.log("form post->",post)
 
   return (
     <div className="p-10">
