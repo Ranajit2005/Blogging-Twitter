@@ -14,10 +14,11 @@ export async function PUT(req: Request) {
       postId,
       isLike ? { $push: { likes: userId } } : { $pull: { likes: userId } },
       { new: true }
-    );
+    ).populate("user");
 
-    if (!isLike) {
+    if (isLike) {
       const notification = await Notification.create({
+        text: `${post?.user?.name} has liked your post`,
         user: String(userId),
       });
       await User.findByIdAndUpdate(
