@@ -17,6 +17,10 @@ interface Props {
 const PostCard = ({ post, user, setPosts }: Props) => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  // See properly it leter
+  const isLike = post?.likes?.find((user:any)=> user?._id == user?._id )
+
+  console.log("is like : ", isLike)
   // let redlike = false
   // const { data } = useSession();
   // if (!data?.user) {
@@ -33,6 +37,8 @@ const PostCard = ({ post, user, setPosts }: Props) => {
 
     try {
       setIsLoading(true);
+
+
       // console.log("Go->")
       // console.log( 
       //   "postId:",post?._id,
@@ -42,24 +48,17 @@ const PostCard = ({ post, user, setPosts }: Props) => {
       await axios.put(`/api/likes`,{
           postId:post?._id,
           userId:user?.currentUser[0]?._id,
-          isLike:post?.hasLiked ? false : true
+          isLike: isLike ? false : true
         
       })
-      // console.log("Done->")
 
       const updatePost = {
         ...post,
-        hasLiked: post?.hasLiked ? false : true,
-        likes: post?.hasLiked ? post?.likes - 1 : post?.likes + 1,
+        hasLiked: isLike ? false : true,
+        likes: isLike ? post?.likes - 1 : post?.likes + 1,
       }
 
       setPosts((prev)=>prev?.map((item)=>(item?._id === post?._id ? updatePost : item )));
-
-
-      // if(post?._id == user?.currentUser[0]?._id ){
-      //   redlike = true;
-      //   console.log("Check like : ",post?._id ==user?.currentUser[0]?._id)
-      // }
 
       setIsLoading(false);
 
@@ -128,7 +127,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
             onClick={handleLike}
             className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
           >
-            <Heart size={20} color={post?.hasLiked ? "red" : "gray"} />
+            <Heart size={20} color={isLike ? "red" : "gray"} fill={isLike ? "red" : "none"}/>
             <p>{post?.likes?.length || 0}</p>
           </div>
 
