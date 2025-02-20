@@ -16,13 +16,23 @@ export async function PUT(req: Request) {
       { new: true }
     ).populate("user");
 
+    const name = await User.findById(userId).select("username")
+    // console.log("The user name is : ",name?.username)
+
+    // console.log("Post -> ",post?.user?._id)
+
+    const UserobjectIdWhoPost = post?.user?._id
+    const userWhoPost = UserobjectIdWhoPost.toString(); // "67b5f52026b9dfbad52cd166"
+    console.log("The object id is : ",userWhoPost)
+
+
     if (isLike) {
       const notification = await Notification.create({
-        text: `${post?.user?.name} has liked your post`,
-        user: String(userId),
+        text: `${name?.username} has liked your post`,
+        user: userWhoPost,
       });
       await User.findByIdAndUpdate(
-        userId,
+        userWhoPost,
         { $push: { notification: notification?._id, hasNewNotifications: true } },
         { new: true }
       );

@@ -20,7 +20,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
   // See properly it leter
   const isLike = post?.likes?.find((user:any)=> user?._id == user?._id )
 
-  console.log("is like : ", isLike)
+  // console.log("is like : ", isLike)
   // let redlike = false
   // const { data } = useSession();
   // if (!data?.user) {
@@ -39,12 +39,12 @@ const PostCard = ({ post, user, setPosts }: Props) => {
       setIsLoading(true);
 
 
-      // console.log("Go->")
-      // console.log( 
-      //   "postId:",post?._id,
-      //     "userId:",user?.currentUser[0]?._id,
-      //     "isLike:",post?.hasLiked ? false : true
-      // )
+      console.log("Go->")
+      console.log( 
+        "postId:",post?._id,
+          "userId:",user?.currentUser[0]?._id,
+          "isLike:",post?.hasLiked ? false : true
+      )
       await axios.put(`/api/likes`,{
           postId:post?._id,
           userId:user?.currentUser[0]?._id,
@@ -72,7 +72,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
     }
   }
 
-  console.log("form post->",post)
+  // console.log("form post->",post)
 
   return (
     <div className="p-10">
