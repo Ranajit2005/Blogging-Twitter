@@ -21,9 +21,26 @@ export async function PUT(req: Request) {
 
     // console.log("Post -> ",post?.user?._id)
 
+    // const isRed = await Post.findById(postId).select("likes")
+    // console.log("Check is Red 1 : ",isRed?.likes)
+    // const isRedString = isRed?.likes.toString();
+
+    // const likedddm = await post.likes.findById("67b5f52026b9dfbad52cd166")
+    // console.log("Ture or false : ",likedddm)
+    // console.log("Check is Red 2 : ",isRedString)
+    // console.log("Check is Red : ",typeof(isRedString))
+
+    // const isPresent = await Post.findOne({likes: Object(userId)})
+    // console.log("is Present : ",isPresent)
+    // console.log("User id : ",typeof(userId))
+
+    // let isRed = false;
+    // if(isPresent == null) isRed = true;
+
+
     const UserobjectIdWhoPost = post?.user?._id
-    const userWhoPost = UserobjectIdWhoPost.toString(); // "67b5f52026b9dfbad52cd166"
-    console.log("The object id is : ",userWhoPost)
+    const userWhoPost = UserobjectIdWhoPost.toString();
+    // console.log("The object id is : ",userWhoPost)
 
 
     if (isLike) {
