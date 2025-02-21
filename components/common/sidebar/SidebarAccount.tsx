@@ -52,7 +52,7 @@ const SidebarPostButton = () => {
                 <AvatarImage src={data?.user?.image} />
                 <AvatarFallback>{data?.user?.name[0].toUpperCase()}</AvatarFallback>
               </Avatar>
-              <div className="flex flex-col items-start text-white">
+              <div className=" hidden lg:block  items-start text-white">
                 <p>{data?.user?.name}</p>
                 {data?.user?.name ? (
                   <p className="opacity-40">@{data?.user?.name}</p>
@@ -61,7 +61,7 @@ const SidebarPostButton = () => {
                 )}
               </div>
             </div>
-            <MoreHorizontal size={24} color="white" />
+            <MoreHorizontal size={24} color="white" className="hidden lg:block"/>
           </div>
         </PopoverTrigger>
 

@@ -21,7 +21,7 @@ const GetPosts = ({
 
     useEffect(()=>{
         console.log("The post posts is : ",post)
-        console.log("Post Image : ",post?.image)
+        // console.log("Post Image : ",post?.map(item)=>(item?.image));
         setPost(post);
     },[post])
 
