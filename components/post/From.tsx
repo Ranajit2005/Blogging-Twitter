@@ -61,7 +61,7 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
 
           // setPosts((prev)=> [newPost,...prev] );
           // setPosts((prev) => (Array.isArray(prev) ? [newPost, ...prev] : [newPost]));
-          setPosts((prev) => {
+          setPosts((prev = []) => {
             console.log("Previous posts state:", prev);
             console.log("Type :",typeof(prev))
             return Array.isArray(prev) ? [newPost, ...prev] : [newPost];
