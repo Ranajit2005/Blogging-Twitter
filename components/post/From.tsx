@@ -64,8 +64,10 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
           setPosts((prev = []) => {
             console.log("Previous posts state:", prev);
             console.log("Type :",typeof(prev))
-            return Array.isArray(prev) ? [newPost, ...prev] : [newPost];
+            return  [newPost, ...prev];
           });
+
+          //return Array.isArray(prev) ? [newPost, ...prev] : [newPost];
           
           
           setImage("");
