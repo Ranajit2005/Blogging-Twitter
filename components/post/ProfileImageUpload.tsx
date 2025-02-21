@@ -1,3 +1,5 @@
+"use client"
+
 import { Download, Edit2, ImageDown } from "lucide-react";
 import Image from "next/image";
 import React, { useCallback, useState } from "react";

@@ -1,3 +1,5 @@
+"use clinet"
+
 import { IPost, IUser } from "@/types";
 import { Heart, Loader2, MessageCircle, Trash2 } from "lucide-react";
 // import { useSession } from "next-auth/react";
