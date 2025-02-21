@@ -2,7 +2,7 @@ import { connectionDatabase } from "@/lib/connection";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
 import { compare } from "bcryptjs"
-import { error } from "console";
+// import { error } from "console";
 
 export async function POST(req:Request) {
     

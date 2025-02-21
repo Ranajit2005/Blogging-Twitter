@@ -35,7 +35,7 @@ const LoginModal = () => {
 
         try {
 
-          const { data } = await axios .post("http://localhost:3000/api/auth/login", values);
+          const { data } = await axios .post("api/auth/login", values);
     
           if(data.success){
             signIn("credentials",values); 
