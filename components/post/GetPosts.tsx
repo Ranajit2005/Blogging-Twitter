@@ -16,7 +16,7 @@ const GetPosts = ({
     loading:boolean
 }) => {
 
-    const [post, setPost ] = useState<IPost[]>(posts);
+    const [post, setPost ] = useState(posts);
     const { data:session , status }:any = useSession();
 
     useEffect(()=>{
