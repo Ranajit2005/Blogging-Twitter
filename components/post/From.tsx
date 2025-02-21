@@ -57,7 +57,9 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
             comments : 0,
           }
 
-          setPosts((prev)=> [newPost,...prev] );
+          // setPosts((prev)=> [newPost,...prev] );
+          setPosts((prev) => (Array.isArray(prev) ? [newPost, ...prev] : [newPost]));
+          
           setImage("");
         }
 
