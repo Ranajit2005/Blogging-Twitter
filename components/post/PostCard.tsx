@@ -60,6 +60,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
 
       setPosts((prev)=>prev?.map((item)=>(item?._id === post?._id ? updatePost : item )));
 
+      
       setIsLoading(false);
 
 
@@ -72,7 +73,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
     }
   }
 
-  // console.log("form post->",post)
+  console.log("form post->",post)
 
   return (
     <div className="p-10">

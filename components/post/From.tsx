@@ -49,6 +49,7 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
         }else{
           const {data} = await axios.post("/api/posts",{text,image,userId:user?.currentUser?.[0]?._id})
 
+          console.log("From ->",data)
           const newPost = {
             ...data,
             user,
@@ -56,6 +57,7 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
             hasLiked : false,
             comments : 0,
           }
+          console.log("Check new post",newPost)
 
           // setPosts((prev)=> [newPost,...prev] );
           setPosts((prev) => (Array.isArray(prev) ? [newPost, ...prev] : [newPost]));
