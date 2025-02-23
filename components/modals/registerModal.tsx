@@ -95,7 +95,7 @@ function RegisterStep1({
 
     try {
 
-      const { data } = await axios.post("http://localhost:3000/api/auth/register?step=1", values);
+      const { data } = await axios.post("/api/auth/register?step=1", values);
 
       if(data.success){
         setData(values);
