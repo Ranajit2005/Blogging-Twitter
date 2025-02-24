@@ -9,7 +9,7 @@ import { Button } from '../ui/button';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-
+import { CldImage, CldUploadWidget } from 'next-cloudinary';
 
 interface Props{
     placeholder : string;
@@ -27,6 +27,8 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
     const[text,setText] = useState<string>("")
     const[isLoading,setIsLoading]= useState(false)
     const [image,setImage] = useState("")
+    const [public_id,setPublic_id] = useState("")
+    // secure_url
 
     // console.log("The user name is :->",user[0]?.name[0].toUpperCase())
     // console.log("The user is form from pg1 :->",user)
@@ -75,6 +77,7 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
 
         setIsLoading(false);
         setText("");
+        router.refresh();
 
       } catch (error) {
         setIsLoading(false);
@@ -92,7 +95,6 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
         setIsLoading(true);
         setImage(img);
 
-        router.refresh();
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -131,7 +133,8 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
 
         <hr className="opacity-0 peer-focus:opacity-100 h-0.5 w-full border-neutral-800 transition" />
 
-        {!isComment && (
+        
+        {/* {!isComment && (
           <ProfileImageUpload
             // image={image}
             // setImage={setImage}
@@ -140,6 +143,36 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
             onChange={(image: string) => handleImageUpload(image)}
             isPost={true}
           />
+
+        )} */}
+
+        {public_id && (
+
+          <CldImage src={public_id} alt={public_id} width={"300"} height={"300"}/>
+        )}
+
+        {!isComment && (
+          <CldUploadWidget uploadPreset="twitter-app"
+          onSuccess={({event, info})=>{
+            if(event === "success"){
+              setPublic_id(info?.public_id);
+              setImage(info?.secure_url)
+            }
+
+            // console.log("info?.public_id: ",info?.public_id)
+            // console.log("info?.secure_url: ",info?.secure_url)
+            // console.log("Info : ",info)
+          }}
+          >
+          {({ open }) => {
+            return (
+              <button  className='bg-white text-black p-2 rounded mt-3' onClick={() => open()}>
+                Upload an Image
+              </button>
+            );
+          }}
+         </CldUploadWidget>
+                
 
         )}
 
