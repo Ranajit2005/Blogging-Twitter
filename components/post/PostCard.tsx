@@ -78,7 +78,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
   // console.log("form post->",post)
 
   return (
-    <div className="p-10">
+    <div className="p-3 lg:p-7">
       {isLoading && (
         <div className="absolute inset-0 w-full h-full bg-black opacity-50">
           <div className="flex justify-center items-center h-full">
