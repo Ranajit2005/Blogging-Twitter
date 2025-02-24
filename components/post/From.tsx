@@ -75,7 +75,9 @@ const From = ({ placeholder, user, setPosts, postId, isComment }: Props) => {
 
         //return Array.isArray(prev) ? [newPost, ...prev] : [newPost];
 
+        // Note that here after submiting the post, we reset the image and public_id value
         setImage("");
+        setPublic_id("");
         router.refresh();
       }
 
