@@ -47,6 +47,7 @@ const From = ({ placeholder, user, setPosts, postId, isComment }: Props) => {
     try {
       setIsLoading(true);
       if (isComment) {
+        
       } else {
         const { data } = await axios.post("/api/posts", {
           text,
@@ -80,7 +81,7 @@ const From = ({ placeholder, user, setPosts, postId, isComment }: Props) => {
 
       setIsLoading(false);
       setText("");
-      router.refresh();
+      // router.refresh();
     } catch (error) {
       setIsLoading(false);
 
@@ -176,7 +177,7 @@ const From = ({ placeholder, user, setPosts, postId, isComment }: Props) => {
               {({ open }) => {
                 return (
                   <button
-                    className="bg-white text-black p-2 rounded mt-3"
+                    className=" text-white p-2 rounded mt-3"
                     onClick={() => open()}
                   >
                     {/* Upload an Image */}
