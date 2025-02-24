@@ -4,7 +4,7 @@ import { IPost, IUser } from '@/types';
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { useSession } from 'next-auth/react';
-import ProfileImageUpload from './ProfileImageUpload';
+// import ProfileImageUpload from './ProfileImageUpload';
 import { Button } from '../ui/button';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -90,17 +90,17 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
       }
     }
 
-    const handleImageUpload = (img : string) => {
-      try {
-        setIsLoading(true);
-        setImage(img);
+    // const handleImageUpload = (img : string) => {
+    //   try {
+    //     setIsLoading(true);
+    //     setImage(img);
 
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-      }
+    //     setIsLoading(false);
+    //   } catch (error) {
+    //     setIsLoading(false);
+    //   }
       
-    }
+    // }
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
