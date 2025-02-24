@@ -152,7 +152,9 @@ const From = ({placeholder, user, setPosts, postId, isComment } : Props) => {
         )}
 
         {!isComment && (
-          <CldUploadWidget uploadPreset="twitter-app"
+          <CldUploadWidget 
+          cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+          uploadPreset= "twitter-app"
           onSuccess={({event, info})=>{
             if(event === "success"){
               setPublic_id(info?.public_id);
