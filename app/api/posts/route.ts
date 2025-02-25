@@ -54,3 +54,31 @@ export async function GET(req: Request) {
 
     }
 }
+
+export async function DELETE(req: Request) {
+
+    try {
+
+        await connectionDatabase();
+        const { postId } = await req.json();
+
+        // console.log("->",searchParams)
+
+        await Post.findByIdAndDelete(postId)
+
+
+        // console.log("use is : ",user);
+        
+        return NextResponse.json({
+            message:"Post deleted successfully",success:true
+        })
+        
+    } catch (error) {
+
+        const result = error as Error;
+        return NextResponse.json({
+            error: result.message
+        }, { status: 400 })
+
+    }
+}

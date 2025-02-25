@@ -72,12 +72,12 @@ const PostCard = ({ post, user, setPosts }: Props) => {
             item?._id === data?.post?._id ? data?.post : item
           )
         );
-        // router.refresh();
-
+        
         setIsLike(
           data?.post?.likes?.some((user: any) => user?._id == user?._id)
         );
-
+        
+        router.refresh();
         console.log("Post : ", post);
         console.log("Post Like length : ", post?.likes?.length);
       }
@@ -95,6 +95,45 @@ const PostCard = ({ post, user, setPosts }: Props) => {
   const goToProfile = (userID: string) => {
     router.push(`/profile/${userID}`);
   };
+
+  const handleDelete = async(event:any) => {
+    event.stopPropagation();
+
+    try {
+      setIsLoading(true);
+
+      const { data } = await axios.delete(`/api/posts`, {
+        data : {postId: post?._id}
+      });
+
+      if (data?.success) {
+
+        setPosts((prev) =>
+          prev?.filter((item) =>
+            item?._id !== post?._id
+          )
+        );
+
+        router.refresh();
+        return toast({
+          title: "Success",
+          description: data.message,
+          variant: "default",
+        });
+
+      }
+
+      setIsLoading(false);
+
+    } catch (error) {
+      return toast({
+        title: "Error",
+        description: "Something went wrong, please try again leter",
+        variant: "destructive",
+      });
+    }
+
+  }
 
   // console.log("form post->",post)
 
@@ -165,7 +204,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
           {post?.user?._id == user?.currentUser[0]?._id && (
             <div
               className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
-              // onClick={handleDelete}
+              onClick={handleDelete}
             >
               <Trash2 size={20} />
             </div>
