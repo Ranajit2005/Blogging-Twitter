@@ -14,29 +14,17 @@ export async function PUT(req: Request) {
       postId,
       isLike ? { $push: { likes: userId } } : { $pull: { likes: userId } },
       { new: true }
-    ).populate("user");
+    ).populate("user")
+    .populate("likes");
 
     const name = await User.findById(userId).select("username")
     // console.log("The user name is : ",name?.username)
 
-    // console.log("Post -> ",post?.user?._id)
+    // console.log("Post -> ",post)
 
     // const isRed = await Post.findById(postId).select("likes")
-    // console.log("Check is Red 1 : ",isRed?.likes)
-    // const isRedString = isRed?.likes.toString();
-
-    // const likedddm = await post.likes.findById("67b5f52026b9dfbad52cd166")
-    // console.log("Ture or false : ",likedddm)
-    // console.log("Check is Red 2 : ",isRedString)
-    // console.log("Check is Red : ",typeof(isRedString))
 
     // const isPresent = await Post.findOne({likes: Object(userId)})
-    // console.log("is Present : ",isPresent)
-    // console.log("User id : ",typeof(userId))
-
-    // let isRed = false;
-    // if(isPresent == null) isRed = true;
-
 
     const UserobjectIdWhoPost = post?.user?._id
     const userWhoPost = UserobjectIdWhoPost.toString();
@@ -57,7 +45,7 @@ export async function PUT(req: Request) {
 
     
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, post });
   } catch (error) {
     const result = error as Error;
     return NextResponse.json(

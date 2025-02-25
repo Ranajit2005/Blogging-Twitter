@@ -1,14 +1,15 @@
-"use clinet"
+"use clinet";
 
 import { IPost, IUser } from "@/types";
 import { Heart, Loader2, MessageCircle, Trash2 } from "lucide-react";
 // import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { sliceText } from "@/lib/utils";
 import { formatDistanceToNowStrict } from "date-fns";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 interface Props {
   post: IPost;
@@ -18,9 +19,13 @@ interface Props {
 
 const PostCard = ({ post, user, setPosts }: Props) => {
   const { toast } = useToast();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLike, setIsLike] = useState(
+    post?.likes?.some((user: any) => user?._id == user?._id)
+  );
   // See properly it leter
-  const isLike = post?.likes?.find((user:any)=> user?._id == user?._id )
+  // const isLike = post?.likes?.find((user:any)=> user?._id == user?._id )
 
   // console.log("is like : ", isLike)
   // let redlike = false
@@ -34,46 +39,62 @@ const PostCard = ({ post, user, setPosts }: Props) => {
   // console.log("post details : ",post?.user?._id)
   // console.log("user details",user?.currentUser[0]?._id)
 
-  const handleLike = async (event:any) => {
+  const handleLike = async (event: any) => {
     event.stopPropagation();
 
     try {
       setIsLoading(true);
 
+      console.log("Go->");
+      console.log(
+        "postId:",
+        post?._id,
+        "userId:",
+        user?.currentUser[0]?._id,
+        "isLike:",
+        post?.hasLiked ? false : true
+      );
+      const { data } = await axios.put(`/api/likes`, {
+        postId: post?._id,
+        userId: user?.currentUser[0]?._id,
+        isLike: isLike ? false : true,
+      });
 
-      console.log("Go->")
-      console.log( 
-        "postId:",post?._id,
-          "userId:",user?.currentUser[0]?._id,
-          "isLike:",post?.hasLiked ? false : true
-      )
-      await axios.put(`/api/likes`,{
-          postId:post?._id,
-          userId:user?.currentUser[0]?._id,
-          isLike: isLike ? false : true
-        
-      })
+      if (data?.success) {
+        // const updatePost = {
+        //   ...post,
+        //   hasLiked: isLike ? false : true,
+        //   likes: isLike ? post?.likes - 1 : post?.likes + 1,
+        // }
 
-      const updatePost = {
-        ...post,
-        hasLiked: isLike ? false : true,
-        likes: isLike ? post?.likes - 1 : post?.likes + 1,
+        setPosts((prev) =>
+          prev?.map((item) =>
+            item?._id === data?.post?._id ? data?.post : item
+          )
+        );
+        // router.refresh();
+
+        setIsLike(
+          data?.post?.likes?.some((user: any) => user?._id == user?._id)
+        );
+
+        console.log("Post : ", post);
+        console.log("Post Like length : ", post?.likes?.length);
       }
 
-      setPosts((prev)=>prev?.map((item)=>(item?._id === post?._id ? updatePost : item )));
-      console.log("Post Image : ",post?.image)
-      
       setIsLoading(false);
-
-
     } catch (error) {
       return toast({
         title: "Error",
         description: "Something went wrong, please try again leter",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
+
+  const goToProfile = (userID: string) => {
+    router.push(`/profile/${userID}`);
+  };
 
   // console.log("form post->",post)
 
@@ -87,55 +108,58 @@ const PostCard = ({ post, user, setPosts }: Props) => {
         </div>
       )}
 
-      <div className="flex gap-3">
+      <div className="flex justify-between">
+        <div className="flex gap-3">
+        <Avatar className="cursor-pointer" onClick={() => goToProfile(post?.user?._id)}>
+          <AvatarImage src={post?.user?.image} />
+          <AvatarFallback>{post?.user?.name[0].toUpperCase()}</AvatarFallback>
+        </Avatar>
 
-          <Avatar>
-            <AvatarImage src={post?.user?.image} />
-            <AvatarFallback>{post?.user?.name[0].toUpperCase()}</AvatarFallback>
-          </Avatar>
-        
-
-        <div className="flex items-center gap-2">
+        <div
+          className="flex items-center gap-2"
+          onClick={() => goToProfile(post?.user?._id)}
+        >
           <p className="text-white font-semibold cursor-pointer hover:underline capitalize">
             {post?.user?.name}
           </p>
 
-          <span className="text-neutral-500 cursor-pointer hover:underline hidden md:block">
+          {/* <span className="text-neutral-500 cursor-pointer hover:underline hidden md:block">
             {post?.user?.name
               ? `@${sliceText(post?.user?.name, 16)}`
               : sliceText(user?.email, 16)}
-          </span>
-
-          <span className="text-neutral-500 text-sm">
-            {formatDistanceToNowStrict(new Date(post?.createdAt))}
-          </span>
+          </span> */}
         </div>
+        </div>
+          <span className="flex items-center text-neutral-500 text-sm pr-1">
+            {formatDistanceToNowStrict(new Date(post?.createdAt))} ago
+          </span>
       </div>
 
       <div>
-
-        <p className="text-white mt-1 text-xl" >{post?.text}</p>
-        <div className="w-full h-80 max-h-96 mt-3" >
-            <img
-              src={post?.image} 
-              alt={post?.text} 
-              className="w-full h-full object-cover rounded-md"
-            />
+        <p className="text-white mt-1 text-xl">{post?.text}</p>
+        <div className="w-full h-80 max-h-96 mt-3">
+          <img
+            src={post?.image}
+            alt={post?.text}
+            className="w-full h-full object-cover rounded-md"
+          />
         </div>
 
         <div className="flex items-center mt-3 gap-10">
-          
-
           <div
             onClick={handleLike}
             className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
           >
-            <Heart size={20} color={isLike ? "red" : "gray"} fill={isLike ? "red" : "none"}/>
+            <Heart
+              size={20}
+              color={isLike ? "red" : "gray"}
+              fill={isLike ? "red" : "none"}
+            />
             <p>{post?.likes?.length || 0}</p>
           </div>
 
           <div className="flex text-neutral-500 items-center gap-2 cursor-pointer transition hover:text-sky-500">
-            <MessageCircle size={20}/>
+            <MessageCircle size={20} />
             <p>{post?.comments?.length || 0}</p>
           </div>
           {post?.user?._id == user?.currentUser[0]?._id && (
@@ -147,7 +171,6 @@ const PostCard = ({ post, user, setPosts }: Props) => {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

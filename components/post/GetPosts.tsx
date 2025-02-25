@@ -20,7 +20,7 @@ const GetPosts = ({
     const { data:session , status }:any = useSession();
 
     useEffect(()=>{
-        console.log("The post posts is : ",post)
+        // console.log("The post posts is : ",post)
         // console.log("Post Image : ",post?.map(item)=>(item?.image));
         setPost(post);
     },[post])
