@@ -34,16 +34,12 @@ export async function GET(req: Request) {
 
         const limit = searchParams.get("limit");
 
-        // console.log("->",searchParams)
-
         const posts = await Post.find({})
         .populate("user")
         .populate("likes")
         .limit(Number(limit))
         .sort({ createAt: -1 });
 
-        // console.log("use is : ",user);
-        
         return NextResponse.json(posts)
         
     } catch (error) {
@@ -55,32 +51,6 @@ export async function GET(req: Request) {
 
     }
 }
-
-// export async function DELETE(req: Request) {
-
-//     try {
-
-//         await connectionDatabase();
-//         const { postId,publicId } = await req.json();
-
-//         console.log("Delete router : ",postId,publicId)
-//         const result = await cloudinary.uploader.destroy(publicId);
-//         console.log('Cloudinary Delete Response:', result);
-//         await Post.findByIdAndDelete(postId)
-     
-//         return NextResponse.json({
-//             message:"Post deleted successfully",success:true
-//         })
-        
-//     } catch (error) {
-
-//         const result = error as Error;
-//         return NextResponse.json({
-//             error: result.message
-//         }, { status: 400 })
-
-//     }
-// }
 
 export async function DELETE(req: Request) {
 
@@ -96,14 +66,14 @@ export async function DELETE(req: Request) {
         await connectionDatabase();
         const { postId, publicId } = await req.json();
 
-        console.log("Delete route: ", postId, publicId);
-
-        const result = await cloudinary.uploader.destroy(publicId);
-        console.log("Cloudinary Delete Response:", result);
+        await cloudinary.uploader.destroy(publicId);
 
         await Post.findByIdAndDelete(postId);
 
-        return NextResponse.json({ message: "Post deleted successfully", success: true });
+        return NextResponse.json({ 
+            message: "Post deleted successfully",
+            success: true 
+        });
 
     } catch (error) {
         console.error("Cloudinary Deletion Error:", error);
