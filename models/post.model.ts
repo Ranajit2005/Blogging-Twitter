@@ -11,6 +11,10 @@ const PostSchema = new Schema({
         type: String,
         // default: "",
     },
+    publicId:{
+        type: String,
+        // default: "",
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",

@@ -43,7 +43,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
     event.stopPropagation();
 
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
 
       console.log("Go->");
       console.log(
@@ -82,7 +82,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
         console.log("Post Like length : ", post?.likes?.length);
       }
 
-      setIsLoading(false);
+      // setIsLoading(false);
     } catch (error) {
       return toast({
         title: "Error",
@@ -103,7 +103,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
       setIsLoading(true);
 
       const { data } = await axios.delete(`/api/posts`, {
-        data : {postId: post?._id}
+        data : {postId: post?._id,publicId:post?.publicId}
       });
 
       if (data?.success) {

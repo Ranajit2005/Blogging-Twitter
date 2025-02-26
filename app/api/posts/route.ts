@@ -1,16 +1,17 @@
 import { connectionDatabase } from "@/lib/connection";
 import Post from "@/models/post.model";
 import { NextResponse } from "next/server";
+import { v2 as cloudinary } from 'cloudinary';
 
 export async function POST(req: Request) {
 
     try {
 
         await connectionDatabase();
-        const { text,image,userId } = await req.json();
-        // console.log("User id is : ",userId)
+        const { text,image,userId,public_id } = await req.json();
+        console.log("Public id is : ",public_id)
 
-        const post = await Post.create({text,image,user:userId});
+        const post = await Post.create({text,image,user:userId,publicId:public_id});
         
         return NextResponse.json(post)
         
@@ -55,30 +56,61 @@ export async function GET(req: Request) {
     }
 }
 
+// export async function DELETE(req: Request) {
+
+//     try {
+
+//         await connectionDatabase();
+//         const { postId,publicId } = await req.json();
+
+//         console.log("Delete router : ",postId,publicId)
+//         const result = await cloudinary.uploader.destroy(publicId);
+//         console.log('Cloudinary Delete Response:', result);
+//         await Post.findByIdAndDelete(postId)
+     
+//         return NextResponse.json({
+//             message:"Post deleted successfully",success:true
+//         })
+        
+//     } catch (error) {
+
+//         const result = error as Error;
+//         return NextResponse.json({
+//             error: result.message
+//         }, { status: 400 })
+
+//     }
+// }
+
 export async function DELETE(req: Request) {
 
+    cloudinary.config({ 
+        cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+    });
+
+
+
     try {
-
         await connectionDatabase();
-        const { postId } = await req.json();
+        const { postId, publicId } = await req.json();
 
-        // console.log("->",searchParams)
+        console.log("Delete route: ", postId, publicId);
 
-        await Post.findByIdAndDelete(postId)
+        const result = await cloudinary.uploader.destroy(publicId);
+        console.log("Cloudinary Delete Response:", result);
 
+        await Post.findByIdAndDelete(postId);
 
-        // console.log("use is : ",user);
-        
-        return NextResponse.json({
-            message:"Post deleted successfully",success:true
-        })
-        
+        return NextResponse.json({ message: "Post deleted successfully", success: true });
+
     } catch (error) {
+        console.error("Cloudinary Deletion Error:", error);
 
-        const result = error as Error;
-        return NextResponse.json({
-            error: result.message
-        }, { status: 400 })
-
+        return NextResponse.json(
+            { error: error instanceof Error ? error.message : "Unknown error" },
+            { status: 400 }
+        );
     }
 }

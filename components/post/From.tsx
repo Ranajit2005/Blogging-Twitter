@@ -53,6 +53,7 @@ const From = ({ placeholder, user, setPosts, postId, isComment }: Props) => {
           text,
           image,
           userId: user?.currentUser?.[0]?._id,
+          public_id
         });
 
         // console.log("From ->",data)
@@ -172,8 +173,8 @@ const From = ({ placeholder, user, setPosts, postId, isComment }: Props) => {
                   setImage(info?.secure_url);
                 }
 
-                // console.log("info?.public_id: ",info?.public_id)
-                // console.log("info?.secure_url: ",info?.secure_url)
+                console.log("info?.public_id: ",info?.public_id)
+                console.log("info : ",info)
                 // console.log("Info : ",info)
               }}
             >
