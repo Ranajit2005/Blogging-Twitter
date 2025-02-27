@@ -40,6 +40,10 @@ const PostCard = ({ posts, post, user, setPosts }: Props) => {
   // console.log("post details : ",post?.user?._id)
   // console.log("user details",user?.currentUser[0]?._id)
 
+  if(!post?.user?.name?.[0].toUpperCase()){
+    return null;
+  }
+
   const handleLike = async (event: any) => {
     event.stopPropagation();
 
