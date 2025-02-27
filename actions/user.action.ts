@@ -26,3 +26,20 @@ export const getUsers = async (limit: number) => {
     }
 
 }
+
+export const getUsersById = async (userId:string) => {
+
+    try {
+        
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_APP_URL}/api/users/${userId}`);
+
+        // console.log("Data is : ",data);
+
+        return data;
+
+    } catch (error) {
+
+        console.log("user action error",error);
+    }
+
+}
