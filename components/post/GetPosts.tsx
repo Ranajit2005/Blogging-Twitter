@@ -7,6 +7,7 @@ import Header from '../common/Header'
 import { Loader2 } from 'lucide-react'
 import  Form  from "./From"
 import PostCard from './PostCard'
+// import { useRouter } from 'next/navigation'
 
 const GetPosts = ({
     posts,
@@ -15,18 +16,13 @@ const GetPosts = ({
     posts:IPost[],
     loading:boolean
 }) => {
-
+    // const router = useRouter();
     const [postList, setPostList ] = useState(posts);
     const { data:session , status }:any = useSession();
 
     useEffect(()=>{
-        // console.log("The post posts is : ",post)
-        // console.log("Post Image : ",post?.map(item)=>(item?.image));
         setPostList(postList);
     },[postList])
-
-    // console.log("From get posts: ",JSON.parse(JSON.stringify(session)));
-
 
   return (
     <>

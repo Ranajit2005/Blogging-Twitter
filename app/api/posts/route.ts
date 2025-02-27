@@ -66,7 +66,7 @@ export async function DELETE(req: Request) {
         await connectionDatabase();
         const { postId, publicId } = await req.json();
 
-        await cloudinary.uploader.destroy(publicId);
+        if(publicId !="") await cloudinary.uploader.destroy(publicId);
 
         await Post.findByIdAndDelete(postId);
 

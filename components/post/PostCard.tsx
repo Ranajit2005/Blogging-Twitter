@@ -3,9 +3,9 @@
 import { IPost, IUser } from "@/types";
 import { Heart, Loader2, MessageCircle, Trash2 } from "lucide-react";
 // import { useSession } from "next-auth/react";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { sliceText } from "@/lib/utils";
+// import { sliceText } from "@/lib/utils";
 import { formatDistanceToNowStrict } from "date-fns";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
@@ -25,20 +25,6 @@ const PostCard = ({ posts, post, user, setPosts }: Props) => {
   const [isLike, setIsLike] = useState(
     post?.likes?.some((user: any) => user?._id == user?._id)
   );
-  // See properly it leter
-  // const isLike = post?.likes?.find((user:any)=> user?._id == user?._id )
-
-  // console.log("is like : ", isLike)
-  // let redlike = false
-  // const { data } = useSession();
-  // if (!data?.user) {
-  //   return null; // or some fallback UI
-  // }
-
-  // console.log("from post card : ", post);
-  // console.log("check->", post?.user?._id == user?.currentUser[0]?._id)
-  // console.log("post details : ",post?.user?._id)
-  // console.log("user details",user?.currentUser[0]?._id)
 
   if(!post?.user?.name?.[0].toUpperCase()){
     return null;
@@ -50,15 +36,6 @@ const PostCard = ({ posts, post, user, setPosts }: Props) => {
     try {
       // setIsLoading(true);
 
-      console.log("Go->");
-      console.log(
-        "postId:",
-        post?._id,
-        "userId:",
-        user?.currentUser[0]?._id,
-        "isLike:",
-        post?.hasLiked ? false : true
-      );
       const { data } = await axios.put(`/api/likes`, {
         postId: post?._id,
         userId: user?.currentUser[0]?._id,
@@ -66,11 +43,6 @@ const PostCard = ({ posts, post, user, setPosts }: Props) => {
       });
 
       if (data?.success) {
-        // const updatePost = {
-        //   ...post,
-        //   hasLiked: isLike ? false : true,
-        //   likes: isLike ? post?.likes - 1 : post?.likes + 1,
-        // }
 
         setPosts((prev) =>
           prev?.map((item) =>
@@ -139,8 +111,7 @@ const PostCard = ({ posts, post, user, setPosts }: Props) => {
 
   }
 
-  console.log("form the post->", post)
-  console.log("form post->",post?.user?.name?.[0].toUpperCase())
+  // console.log("form the post->", post)
 
   return (
     <div className="p-3 lg:p-7">

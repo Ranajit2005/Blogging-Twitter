@@ -31,12 +31,6 @@ const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) 
   const [public_id, setPublic_id] = useState("");
   // secure_url
 
-  // console.log("The user name is :->",user[0]?.name[0].toUpperCase())
-  // console.log("The user is form from pg1 :->",user)
-  // console.log("The user is form from pg2 :->",user?.currentUser?.[0]?._id)
-
-  // console.log("The user is :->",user.profilePhoto)
-
   const { data } = useSession();
   if (!data?.user) {
     return null; // or some fallback UI
@@ -57,28 +51,21 @@ const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) 
           public_id
         });
 
-        // console.log("From ->",data)
         const newPost = {
           ...data,
           user,
-          // likes: 0,
-          // hasLiked: false,
           comments: 0,
         };
-        // console.log("Check new post",newPost)
-
-        // setPosts((prev) => (Array.isArray(prev) ? [newPost, ...prev] : [newPost]));
-        // posts?.push(newPost);
-        setPosts([...posts,newPost]);
-
-        setPosts((prev) => {
-          console.log("Previous posts state:", prev);
-          console.log("Type :", typeof prev);
-          // return [newPost, ...prev];
-          return [...prev,newPost]
-        });
-
-        //return Array.isArray(prev) ? [newPost, ...prev] : [newPost];
+        
+        setPosts([newPost,...posts]);
+        
+        // setPosts((posts)=> {
+        //   const updatedPosts = [newPost, ...posts];
+        
+        //   return updatedPosts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        // });
+        
+        
 
         // Note that here after submiting the post, we reset the image and public_id value
         setImage("");
@@ -88,7 +75,7 @@ const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) 
 
       setIsLoading(false);
       setText("");
-      router.refresh();
+      // router.refresh();
     } catch (error) {
       setIsLoading(false);
 
