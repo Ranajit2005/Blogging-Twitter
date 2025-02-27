@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
         await connectionDatabase();
         const { text,image,userId,public_id } = await req.json();
-        console.log("Public id is : ",public_id)
+        // console.log("Public id is : ",public_id)
 
         const post = await Post.create({text,image,user:userId,publicId:public_id});
         

@@ -18,9 +18,10 @@ interface Props {
   setPosts: Dispatch<SetStateAction<IPost[]>>;
   postId?: string;
   isComment?: boolean;
+  posts: IPost[];
 }
 
-const From = ({ placeholder, user, setPosts, postId, isComment }: Props) => {
+const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) => {
   const router = useRouter();
   const { toast } = useToast();
 
@@ -60,14 +61,16 @@ const From = ({ placeholder, user, setPosts, postId, isComment }: Props) => {
         const newPost = {
           ...data,
           user,
-          likes: 0,
-          hasLiked: false,
+          // likes: 0,
+          // hasLiked: false,
           comments: 0,
         };
         // console.log("Check new post",newPost)
 
-        // setPosts((prev)=> [newPost,...prev] );
         // setPosts((prev) => (Array.isArray(prev) ? [newPost, ...prev] : [newPost]));
+        // posts?.push(newPost);
+        setPosts([...posts,newPost]);
+
         setPosts((prev) => {
           console.log("Previous posts state:", prev);
           console.log("Type :", typeof prev);
@@ -85,7 +88,7 @@ const From = ({ placeholder, user, setPosts, postId, isComment }: Props) => {
 
       setIsLoading(false);
       setText("");
-      // router.refresh();
+      router.refresh();
     } catch (error) {
       setIsLoading(false);
 

@@ -16,14 +16,14 @@ const GetPosts = ({
     loading:boolean
 }) => {
 
-    const [post, setPost ] = useState<IPost[]>([]);
+    const [postList, setPostList ] = useState(posts);
     const { data:session , status }:any = useSession();
 
     useEffect(()=>{
         // console.log("The post posts is : ",post)
         // console.log("Post Image : ",post?.map(item)=>(item?.image));
-        setPost(post);
-    },[post])
+        setPostList(postList);
+    },[postList])
 
     // console.log("From get posts: ",JSON.parse(JSON.stringify(session)));
 
@@ -41,12 +41,16 @@ const GetPosts = ({
           <Form 
             placeholder="What's on your mind"
             user = {JSON.parse(JSON.stringify(session))}
-            setPosts={setPost}
+            setPosts={setPostList}
+            posts={postList}
           />
-          {posts?.map((post)=>(
-            <PostCard key={post?._id} post={post}
-            user = {JSON.parse(JSON.stringify(session))}
-            setPosts={setPost}
+          {postList?.map((post)=>(
+            <PostCard 
+              key={post?._id} 
+              post={post}
+              user = {JSON.parse(JSON.stringify(session))}
+              setPosts={setPostList}
+              posts={postList}
             />
           ))}
         </>

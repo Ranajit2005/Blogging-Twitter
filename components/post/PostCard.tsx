@@ -12,12 +12,13 @@ import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
 interface Props {
+  posts: IPost[];
   post: IPost;
   user: IUser;
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
 }
 
-const PostCard = ({ post, user, setPosts }: Props) => {
+const PostCard = ({ posts, post, user, setPosts }: Props) => {
   const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -78,8 +79,8 @@ const PostCard = ({ post, user, setPosts }: Props) => {
         );
         
         router.refresh();
-        console.log("Post : ", post);
-        console.log("Post Like length : ", post?.likes?.length);
+        // console.log("Post : ", post);
+        // console.log("Post Like length : ", post?.likes?.length);
       }
 
       // setIsLoading(false);
@@ -108,8 +109,7 @@ const PostCard = ({ post, user, setPosts }: Props) => {
 
       if (data?.success) {
 
-        setPosts((prev) =>
-          prev?.filter((item) =>
+        setPosts(posts?.filter((item) =>
             item?._id !== post?._id
           )
         );
@@ -135,7 +135,8 @@ const PostCard = ({ post, user, setPosts }: Props) => {
 
   }
 
-  // console.log("form post->",post)
+  console.log("form the post->", post)
+  console.log("form post->",post?.user?.name?.[0].toUpperCase())
 
   return (
     <div className="p-3 lg:p-7">
@@ -151,7 +152,8 @@ const PostCard = ({ post, user, setPosts }: Props) => {
         <div className="flex gap-3">
         <Avatar className="cursor-pointer" onClick={() => goToProfile(post?.user?._id)}>
           <AvatarImage src={post?.user?.image} />
-          <AvatarFallback>{post?.user?.name[0].toUpperCase()}</AvatarFallback>
+          {/* <AvatarFallback>{post?.user?.name?.[0].toUpperCase()}</AvatarFallback> */}
+          <AvatarFallback>{post?.user?.name?.[0].toUpperCase()}</AvatarFallback>
         </Avatar>
 
         <div
