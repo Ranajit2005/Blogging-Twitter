@@ -33,7 +33,7 @@ export const getUsersById = async (userId:string) => {
         
         const { data } = await axios.get(`${process.env.NEXT_PUBLIC_APP_URL}/api/users/${userId}`);
 
-        // console.log("Data is : ",data);
+        // console.log("Data is :->",typeof(data));
 
         return data;
 
@@ -43,3 +43,22 @@ export const getUsersById = async (userId:string) => {
     }
 
 }
+
+
+export const getCurrentUser = async () => {
+
+    try {
+        
+        const session: any = await getAuthOptions();
+        const currentUserId = session?.currentUser?.[0]?._id;
+        console.log("------------->",typeof(currentUserId))
+        return currentUserId;
+
+    } catch (error) {
+
+        console.log("user action error for current user ",error);
+    }
+
+}
+
+

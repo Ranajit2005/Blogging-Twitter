@@ -8,11 +8,19 @@ import { CldUploadWidget } from "next-cloudinary";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+// import { getAuthOptions } from "@/lib/authOptions";
+// import { getCurrentUser } from "@/actions/user.action";
 
 
 const EditModal = ({ user }: { user: IUser }) => {
 
   const router = useRouter();
+  const currentUser = useSession();
+  // const currentUser = getCurrentUser();
+
+  // console.log("Edit modal : ",currentUser?.data?.currentUser?.[0]?._id);
+  // console.log("Edit modal user : ",user?._id);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [coverPhoto,setCoverPhoto] = useState("");
@@ -80,6 +88,8 @@ const EditModal = ({ user }: { user: IUser }) => {
 
   };
 
+  
+
   return (
     <>
       {isLoading && (
@@ -87,7 +97,10 @@ const EditModal = ({ user }: { user: IUser }) => {
           <Loader2 className="animate-spin text-sky-500" />
         </div>
       )}
-      <div className=" mt-16 pl-4">
+
+
+      { (currentUser?.data?.currentUser?.[0]?._id == user?._id) && (
+        <div className=" mt-16 pl-4">
         { public_id && (
           <Button className="mt-3 mb-1" onClick={onSubmit}>
             Click To Upload
@@ -130,6 +143,8 @@ const EditModal = ({ user }: { user: IUser }) => {
           </div>
         </div>
       </div>
+    )}
+      
     </>
   );
 };

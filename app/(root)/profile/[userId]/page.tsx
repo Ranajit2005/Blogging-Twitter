@@ -12,15 +12,13 @@ const ProfileUser = async ({
 
     const { userId } = await params;
     const getUserDetails = await getUsersById(userId);
-    // console.log("Get user details : ",JSON.parse(JSON.stringify(getUserDetails?.user)))
-
 
 
   return (
     <>
       <Header title=""/>
       <ProfileHero user = {JSON.parse(JSON.stringify(getUserDetails?.user))}/>
-      <ProfileBio user = {JSON.parse(JSON.stringify(getUserDetails?.user))}/>
+      <ProfileBio user = {JSON.parse(JSON.stringify(getUserDetails?.user))  }/>
     </>
   )
 }

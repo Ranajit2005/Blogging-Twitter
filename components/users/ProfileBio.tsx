@@ -5,7 +5,7 @@ import EditModal from './EditModal'
 const ProfileBio = ({user}:{user:IUser}) => {
   return (
     <>
-      <EditModal user={user}/>
+      <EditModal user={user}  />
     </>
   )
 }
