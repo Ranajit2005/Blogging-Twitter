@@ -9,7 +9,7 @@ export default async function Home() {
 
   // const { router } = useRouter();
 
-  let loading = false;
+  const loading = false;
   const posts = await getPosts(loading, 10);
 
   // console.log("1st time ost value is : ",posts)

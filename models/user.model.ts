@@ -22,19 +22,27 @@ const UserSchema = new Schema({
     },
     coverPhoto:{
         type: String,
-        // default: "",
+        default: "",
+    },
+    coverPhotoPublicId:{
+        type: String,
+        default: "",
     },
     profilePhoto:{
         type: String,
-        // default: "",
+        default: "",
+    },
+    profilePhotoPublicId:{
+        type: String,
+        default: "",
     },
     bio:{
         type: String,
-        // default: "",
+        default: "",
     },
     location:{
         type: String,
-        // default: "",
+        default: "",
     },
     hasNewNotifications:{
         type: Boolean,

@@ -4,6 +4,7 @@ export interface IUser {
     email: string;
     name: string;
     profilePhoto: string;
+    profilePhotoPublicId: string;
     coverPhoto: string;
     updatedAt: Date;
     _id: string;

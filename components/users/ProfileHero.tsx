@@ -23,7 +23,7 @@ const ProfileHero = ({user}:{user:IUser}) => {
       )}
 
       <div className="absolute -bottom-16 left-4">
-        <Avatar className="w-32 h-32">
+        <Avatar className="w-32 h-32 border-2 border-black rounded-full">
           <AvatarImage src={user.profilePhoto} />
           <AvatarFallback className="text-7xl uppercase  bg-orange-400">
             {user.name[0]}
