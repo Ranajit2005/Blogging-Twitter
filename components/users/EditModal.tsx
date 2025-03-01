@@ -29,7 +29,7 @@ const EditModal = ({ user }: { user: IUser }) => {
   const [public_id, setPublic_id] = useState("");
 
   const { toast } = useToast();
-
+  // console.log("User : ",user)
   const onSubmit = async () => {
     try {
       await axios.post("/api/profileImage", {
@@ -135,12 +135,14 @@ const EditModal = ({ user }: { user: IUser }) => {
             }}
           </CldUploadWidget>
 
-          <div
+          {user?.profilePhotoPublicId && (
+            <div
             className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
             onClick={handleDelete}
-          >
+            >
             <Trash2 size={20} />
           </div>
+          ) }     
         </div>
       </div>
     )}
