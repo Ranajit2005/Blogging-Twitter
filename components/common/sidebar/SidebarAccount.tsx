@@ -10,11 +10,11 @@ import { Loader2, LogOut, MoreHorizontal } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import React from "react";
 
-// interface Props {
-//     user : IUser
-// }
+interface Props {
+    user : IUser
+}
 
-const SidebarPostButton = () => {
+const SidebarPostButton = (user:Props) => {
   const { data, status } = useSession();
 
   if (status === "loading") {
@@ -30,7 +30,7 @@ const SidebarPostButton = () => {
     return null; // or some fallback UI
   }
 
-  // console.log("The data image is : ",data?.user?.image)
+  // console.log("The data image is : ",user?.user[0].name?.[0].toUpperCase())
 
   return (
     <>
@@ -49,8 +49,8 @@ const SidebarPostButton = () => {
           <div className="flex justify-between items-center">
             <div className="flex gap-2 items-center">
               <Avatar>
-                <AvatarImage src={data?.user?.image} />
-                <AvatarFallback>{data?.user?.name[0].toUpperCase()}</AvatarFallback>
+                <AvatarImage src={user?.user[0]?.profilePhoto} />
+                <AvatarFallback>{user?.user[0].name?.[0].toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className=" hidden lg:block  items-start text-white">
                 <p>{data?.user?.name}</p>

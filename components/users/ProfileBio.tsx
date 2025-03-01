@@ -5,10 +5,10 @@ import EditModal from './EditModal'
 const ProfileBio = ({user}:{user:IUser}) => {
   return (
     <>
-      {/* <div className='relative'> */}
+      <div className='relative'>
         
       <EditModal user={user}  />
-      {/* </div> */}
+      </div>
     </>
   )
 }

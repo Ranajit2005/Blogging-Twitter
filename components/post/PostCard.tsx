@@ -126,7 +126,7 @@ const PostCard = ({ posts, post, user, setPosts }: Props) => {
       <div className="flex justify-between">
         <div className="flex gap-3">
         <Avatar className="cursor-pointer" onClick={() => goToProfile(post?.user?._id)}>
-          <AvatarImage src={post?.user?.image} />
+          <AvatarImage src={post?.user?.profilePhoto} />
           {/* <AvatarFallback>{post?.user?.name?.[0].toUpperCase()}</AvatarFallback> */}
           <AvatarFallback>{post?.user?.name?.[0].toUpperCase()}</AvatarFallback>
         </Avatar>

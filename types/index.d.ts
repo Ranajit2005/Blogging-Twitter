@@ -6,6 +6,7 @@ export interface IUser {
     profilePhoto: string;
     profilePhotoPublicId: string;
     coverPhoto: string;
+    coverPhotoPublicId: string;
     updatedAt: Date;
     _id: string;
     bio: string;

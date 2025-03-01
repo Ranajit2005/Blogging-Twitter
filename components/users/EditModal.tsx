@@ -23,7 +23,7 @@ const EditModal = ({ user }: { user: IUser }) => {
   // console.log("Edit modal user : ",user?._id);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [coverPhoto,setCoverPhoto] = useState("");
+
 
   const [profilePhoto, setProfilePhoto] = useState("");
   const [public_id, setPublic_id] = useState("");
@@ -41,8 +41,8 @@ const EditModal = ({ user }: { user: IUser }) => {
       // Note that here after submiting the post, we reset the image and public_id value
       setProfilePhoto("");
       setPublic_id("");
-      setIsLoading(false);
       router.refresh();
+      setIsLoading(false);
 
     } catch (error) {
       setIsLoading(false);
@@ -88,8 +88,6 @@ const EditModal = ({ user }: { user: IUser }) => {
 
   };
 
-  
-
   return (
     <>
       {isLoading && (
@@ -100,10 +98,10 @@ const EditModal = ({ user }: { user: IUser }) => {
 
 
       { (currentUser?.data?.currentUser?.[0]?._id == user?._id) && (
-        <div className=" mt-16 pl-4">
+        <div className=" mt-16 pl-4 relative ">
         { public_id && (
-          <Button className="mt-3 mb-1" onClick={onSubmit}>
-            Click To Upload
+          <Button className="absolute left-11 bottom-1 mt-3 mb-1 bg-blue-600 text-white hover:bg-blue-900" onClick={onSubmit}>
+            SAVE
           </Button>
         ) }
 
