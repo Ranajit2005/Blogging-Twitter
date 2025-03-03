@@ -90,7 +90,7 @@ const ProfileHero = ({ user }: { user: IUser }) => {
       
       {user.coverPhoto ? (
         <img
-          fill
+          // fill
           src={user.coverPhoto}
           alt={user.name}
           style={{ objectFit: "cover" }}
@@ -98,7 +98,7 @@ const ProfileHero = ({ user }: { user: IUser }) => {
         />
       ) : (
         <img
-          fill
+          // fill
           src={"/images/cover-placeholder.png"}
           alt={user.name}
           style={{ objectFit: "cover" }}
@@ -108,9 +108,9 @@ const ProfileHero = ({ user }: { user: IUser }) => {
 
       <div className="absolute z-10 text-black right-5 bottom-3">
         {currentUser?.data?.currentUser?.[0]?._id == user?._id && (
-          <div>
+          <div className="relative ">
             {coverPhotoPublic_id && (
-              <Button className="mb-1 bg-blue-600 text-white hover:bg-blue-900" onClick={onSubmitCoverPhoto}>
+              <Button className="absolute right-1 bottom-[-3px]  mb-1 bg-blue-600 text-white  hover:bg-blue-900" onClick={onSubmitCoverPhoto}>
                 SAVE
               </Button>
             )}
@@ -127,9 +127,6 @@ const ProfileHero = ({ user }: { user: IUser }) => {
                     setCoverPhoto(info?.secure_url);
                   }
 
-                  console.log("info?.public_id: ", info?.public_id);
-                  console.log("info : ", info);
-                  // console.log("Info : ",info)
                 }}
               >
                 {({ open }) => {

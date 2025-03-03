@@ -6,7 +6,7 @@ import User from './User';
 
 const FollowUser = ({ users }:{users: IUser[]}) => {
   return (
-    <div className="py-4 hidden lg:block w-[266px]">
+    <div className="sticky left-0 top-0 h-screen          py-4 hidden lg:block w-[266px]">
       <div className="bg-neutral-800 rounded-xl">
         <div className="flex items-center justify-between px-4 pt-4">
           <h2 className="text-white text-xl font-semibold">Who to follow</h2>

@@ -162,9 +162,6 @@ const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) 
                   setPublic_id(info?.public_id);
                   setImage(info?.secure_url);
                 }
-
-                console.log("info?.public_id: ",info?.public_id)
-                console.log("info : ",info)
                 // console.log("Info : ",info)
               }}
             >

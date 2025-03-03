@@ -100,7 +100,7 @@ const EditModal = ({ user }: { user: IUser }) => {
       { (currentUser?.data?.currentUser?.[0]?._id == user?._id) && (
         <div className=" mt-16 pl-4 relative ">
         { public_id && (
-          <Button className="absolute left-11 bottom-1 mt-3 mb-1 bg-blue-600 text-white hover:bg-blue-900" onClick={onSubmit}>
+          <Button className="absolute left-11 bottom-[-3px] mt-3 mb-1 bg-blue-600 text-white hover:bg-blue-900" onClick={onSubmit}>
             SAVE
           </Button>
         ) }
@@ -116,9 +116,6 @@ const EditModal = ({ user }: { user: IUser }) => {
                 setPublic_id(info?.public_id);
                 setProfilePhoto(info?.secure_url);
               }
-
-              console.log("info?.public_id: ", info?.public_id);
-              console.log("info : ", info);
               // console.log("Info : ",info)
             }}
           >
