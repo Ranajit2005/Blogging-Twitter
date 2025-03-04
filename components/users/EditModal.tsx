@@ -8,22 +8,17 @@ import { CldUploadWidget } from "next-cloudinary";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 // import { getAuthOptions } from "@/lib/authOptions";
 // import { getCurrentUser } from "@/actions/user.action";
 
-
 const EditModal = ({ user }: { user: IUser }) => {
-
   const router = useRouter();
-  const currentUser = useSession();
   // const currentUser = getCurrentUser();
 
   // console.log("Edit modal : ",currentUser?.data?.currentUser?.[0]?._id);
   // console.log("Edit modal user : ",user?._id);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
 
   const [profilePhoto, setProfilePhoto] = useState("");
   const [public_id, setPublic_id] = useState("");
@@ -43,7 +38,6 @@ const EditModal = ({ user }: { user: IUser }) => {
       setPublic_id("");
       router.refresh();
       setIsLoading(false);
-
     } catch (error) {
       setIsLoading(false);
 
@@ -55,37 +49,34 @@ const EditModal = ({ user }: { user: IUser }) => {
     }
   };
 
-    const handleDelete = async(event:any) => {
-      event.stopPropagation();
-  
-      try {
-        setIsLoading(true);
-  
-        const UserWantDeletePublicId = user?.profilePhotoPublicId;
-        const { data } = await axios.delete(`/api/profileImage`, {
-          data : {publicId: UserWantDeletePublicId,userId: user }
-        });
+  const handleDelete = async (event: any) => {
+    event.stopPropagation();
 
-        if(data?.success){
-          setIsLoading(false);
-          router.refresh();
+    try {
+      setIsLoading(true);
 
-          return toast({
-            title: "Success",
-            description: data.message,
-            variant: "default",
-          });
-        }
-        
-  
-      } catch (error) {
+      const UserWantDeletePublicId = user?.profilePhotoPublicId;
+      const { data } = await axios.delete(`/api/profileImage`, {
+        data: { publicId: UserWantDeletePublicId, userId: user },
+      });
+
+      if (data?.success) {
+        setIsLoading(false);
+        router.refresh();
+
         return toast({
-          title: "Error",
-          description: "Something went wrong, please try again leter",
-          variant: "destructive",
+          title: "Success",
+          description: data.message,
+          variant: "default",
         });
       }
-
+    } catch (error) {
+      return toast({
+        title: "Error",
+        description: "Something went wrong, please try again leter",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -96,14 +87,15 @@ const EditModal = ({ user }: { user: IUser }) => {
         </div>
       )}
 
-
-      { (currentUser?.data?.currentUser?.[0]?._id == user?._id) && (
-        <div className=" mt-16 pl-4 relative ">
-        { public_id && (
-          <Button className="absolute left-11 bottom-[-3px] mt-3 mb-1 bg-blue-600 text-white hover:bg-blue-900" onClick={onSubmit}>
+      <div className=" mt-16 pl-4 relative ">
+        {public_id && (
+          <Button
+            className="absolute left-11 bottom-[-3px] mt-3 mb-1 bg-blue-600 text-white hover:bg-blue-900"
+            onClick={onSubmit}
+          >
             SAVE
           </Button>
-        ) }
+        )}
 
         <div className="flex gap-5 pl-8">
           <CldUploadWidget
@@ -123,7 +115,7 @@ const EditModal = ({ user }: { user: IUser }) => {
               return (
                 <button className=" rounded" onClick={() => open()}>
                   {/* Upload an Image */}
-                  <ImageDown className=" text-neutral-500 cursor-pointer transition hover:text-white"/>
+                  <ImageDown className=" text-neutral-500 cursor-pointer transition hover:text-white" />
                   {/* Upload */}
                 </button>
               );
@@ -132,16 +124,14 @@ const EditModal = ({ user }: { user: IUser }) => {
 
           {user?.profilePhotoPublicId && (
             <div
-            className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
-            onClick={handleDelete}
+              className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
+              onClick={handleDelete}
             >
-            <Trash2 size={20} />
-          </div>
-          ) }     
+              <Trash2 size={20} />
+            </div>
+          )}
         </div>
       </div>
-    )}
-      
     </>
   );
 };
