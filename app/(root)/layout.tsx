@@ -1,3 +1,5 @@
+// "use client"
+
 import Auth from "@/components/common/Auth";
 import Sidebar from "@/components/common/Sidebar";
 import { Toaster } from "@/components/ui/toaster";
@@ -6,6 +8,8 @@ import React from "react";
 import NextTopLoader from "nextjs-toploader";
 import FollowUser from "@/components/FollowUser";
 import { getUsers } from "@/actions/user.action";
+// import { useRouter } from "next/router";
+// import { usePathname } from "next/navigation";
 
 interface Props {
   children: React.ReactNode;
@@ -14,6 +18,8 @@ interface Props {
 const Homelayout = async ({ children }: Props) => {
   const session: any = await getAuthOptions();
   const users = await getUsers(5);
+  // const pathname = usePathname();
+  // const route = useRouter();
 
   if (!session) {
     return (
