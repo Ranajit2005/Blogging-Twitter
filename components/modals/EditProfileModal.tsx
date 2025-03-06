@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import Modal from '../ui/modal';
 import { Loader2 } from 'lucide-react';
 import { IUser } from '@/types';
+import EditForm from '../users/EditForm';
 
 const EditProfileModal = ({user}:{user:IUser}) => {
 
@@ -31,7 +32,7 @@ const EditProfileModal = ({user}:{user:IUser}) => {
             onChange={(image: string) => handleImageUpload(image, true)}
           /> */}
     
-          {/* <EditForm user={user} /> */}
+          <EditForm user={user} />
         </>
       );
       return (
