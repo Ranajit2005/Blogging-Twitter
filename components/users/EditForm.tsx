@@ -1,7 +1,13 @@
 import { IUser } from "@/types";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "@/lib/validation";
@@ -13,7 +19,6 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
 const EditForm = ({ user }: { user: IUser }) => {
-
   const editModal = useEditModal();
   const router = useRouter();
   const { toast } = useToast();
@@ -33,34 +38,29 @@ const EditForm = ({ user }: { user: IUser }) => {
   const onSubmit = async (values: z.infer<typeof userSchema>) => {
 
     try {
-
       const { data } = await axios.put(`/api/users/${user?._id}?type=updateFields`,values);
 
-      if(data.success){
-        router.refresh();
+      if (data.success) {
         editModal.onClose();
+        router.refresh();
       }
-      
-      router.refresh();
-    } catch (error : any) {
 
-      if(error.response.data.error){
+    } catch (error: any) {
+      if (error.response.data.error) {
         return toast({
-          title:"Error",
+          title: "Error",
           description: error.response.data.error,
-          variant: "destructive"
-        })
-      }else{
+          variant: "destructive",
+        });
+      } else {
         return toast({
-          title:"Error",
+          title: "Error",
           description: "Something went wrong, please try again later",
-          variant: "destructive"
-        })
+          variant: "destructive",
+        });
       }
     }
-  }
-
-  console.log("Check")
+  };
 
   return (
     <Form {...form}>

@@ -32,7 +32,7 @@ export async function PUT(req: Request,route:{params:{userId:string}}) {
             }
         
             await User.findByIdAndUpdate(userId, body, { new: true });
-            return NextResponse.json({ message: "User updated successfully" });
+            return NextResponse.json({ message: "User updated successfully",success: true });
           }
     } catch (error) {
       const result = error as Error;
