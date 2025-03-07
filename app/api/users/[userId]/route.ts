@@ -3,36 +3,43 @@ import Post from "@/models/post.model";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
 
-// export async function PUT(req: Request,route:{params:{userId:string}}) {
+export async function PUT(req: Request,route:{params:{userId:string}}) {
 
-//     try {
+    try {
 
-//         await connectionDatabase();
+        await connectionDatabase();
         
-//         const body = await req.json();
-//         const { userId } = route.params;
+        const body = await req.json();
+        const { userId } = route.params;
+        const { searchParams } = new URL(req.url);
+        const type = searchParams.get("type");
+
         
-
-//         const user = await User.find({
-//             _id: { $ne: userId }
-//         })
-//         .select("name username _id email profilePhoto")
-//         .limit(Number(limit))
-//         .sort({ createAt: -1 });
-
-//         // console.log("use is : ",user);
+        if (type == "updateImage") {
+            await User.findByIdAndUpdate(userId, body, { new: true });
+            return NextResponse.json({ message: "User updated successfully" });
+          } else if (type === "updateFields") {
+            const existUser = await User.findById(userId);
         
-//         return NextResponse.json(user)
+            if (body?.username !== existUser?.username) {
+              const usernameExist = await User.exists({ username: body.username });
+              if (usernameExist) {
+                return NextResponse.json(
+                  { error: "Username already exists" },
+                  { status: 400 }
+                );
+              }
+            }
         
-//     } catch (error) {
-
-//         const result = error as Error;
-//         return NextResponse.json({
-//             error: result.message
-//         }, { status: 400 })
-
-//     }
-// }
+            await User.findByIdAndUpdate(userId, body, { new: true });
+            return NextResponse.json({ message: "User updated successfully" });
+          }
+    } catch (error) {
+      const result = error as Error;
+      return NextResponse.json({ error: result.message }, { status: 400 });
+    }
+        
+}
 
 
 export async function GET(req: Request,route:{params:{userId:string}}) {

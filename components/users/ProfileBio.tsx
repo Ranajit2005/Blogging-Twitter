@@ -6,25 +6,32 @@ import EditModal from "./EditModal";
 import { useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import useEditModal from "@/hooks/useEditModal";
+import EditProfileModal from "../modals/EditProfileModal";
+import {  UserRoundPen } from "lucide-react";
 
 const ProfileBio = ({ user }: { user: IUser }) => {
   const editModal = useEditModal();
   const currentUser = useSession();
 
-
+  
   return (
     <>
       {currentUser?.data?.currentUser?.[0]?._id == user?._id && (
         <EditModal user={user} />
       )}
 
+      <EditProfileModal user={user}/>
+
       <div>
         <div> 
-          {/* {currentUser?.data?.currentUser?.[0]?._id == user?._id && (
+          {currentUser?.data?.currentUser?.[0]?._id == user?._id && (
             <Button
-              onClick={()=>editModal.onOpen()}
-            >Edit Profile</Button>
-         )} */}
+              onClick={()=> editModal.onOpen()}
+              className="bg-neutral-800 hover:bg-neutral-900"
+            >
+              <UserRoundPen size={30} className="text-white "/>
+            </Button>
+         )}
         </div>
       </div>
     </>
