@@ -23,7 +23,7 @@ const ProfileBio = ({ user }: { user: IUser }) => {
       <EditProfileModal user={user}/>
 
       <div className="relative bg-red-200">
-        <div className="absolute right-2 bottom-10"> 
+        <div className="absolute right-2  bottom-4 sm:bottom-10"> 
           {currentUser?.data?.currentUser?.[0]?._id == user?._id && (
             <Button
               onClick={()=> editModal.onOpen()}

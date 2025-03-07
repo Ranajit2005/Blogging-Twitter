@@ -87,17 +87,17 @@ const EditModal = ({ user }: { user: IUser }) => {
         </div>
       )}
 
-      <div className=" mt-16 pl-4 relative ">
+      <div className=" mt-10 sm:mt-16 pl-4 relative ">
         {public_id && (
           <Button
-            className="absolute left-11 bottom-[-3px] mt-3 mb-1 bg-blue-600 text-white hover:bg-blue-900"
+            className="absolute left-4 sm:left-11 bottom-[-15px] sm:bottom-[-3px] mt-3 mb-1 bg-blue-600 text-white hover:bg-blue-900"
             onClick={onSubmit}
           >
             SAVE
           </Button>
         )}
 
-        <div className="flex gap-5 pl-8">
+        <div className="flex gap-2 pl-3 sm:pl-8 sm:gap-5">
           <CldUploadWidget
             uploadPreset="twitter-app"
             options={{
@@ -115,7 +115,7 @@ const EditModal = ({ user }: { user: IUser }) => {
               return (
                 <button className=" rounded" onClick={() => open()}>
                   {/* Upload an Image */}
-                  <ImageDown className=" text-neutral-500 cursor-pointer transition hover:text-white" />
+                  <ImageDown className=" text-neutral-500 cursor-pointer transition hover:text-white" size={18}   data-size="sm:size-[20px] md:size-[24px]"/>
                   {/* Upload */}
                 </button>
               );
@@ -127,7 +127,7 @@ const EditModal = ({ user }: { user: IUser }) => {
               className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
               onClick={handleDelete}
             >
-              <Trash2 size={20} />
+              <Trash2 size={18} />
             </div>
           )}
         </div>

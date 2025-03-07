@@ -153,10 +153,10 @@ const ProfileHero = ({ user }: { user: IUser }) => {
         )}
       </div>
 
-      <div className="absolute -bottom-16 left-4">
-        <Avatar className="w-32 h-32 border-2 border-black rounded-full">
+      <div className="absolute  -bottom-10 sm:-bottom-16 left-2 sm:left-4">
+        <Avatar className="w-20 h-20 sm:w-32 sm:h-32 border-2 border-black rounded-full">
           <AvatarImage src={user.profilePhoto} />
-          <AvatarFallback className="text-7xl uppercase text-black bg-orange-400">
+          <AvatarFallback className="text-5xl sm:text-7xl uppercase text-black bg-orange-400">
             {user.name[0]}
           </AvatarFallback>
         </Avatar>
