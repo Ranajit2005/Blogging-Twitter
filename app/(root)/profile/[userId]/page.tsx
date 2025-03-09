@@ -12,7 +12,8 @@ const ProfileUser = async ({
 }) => {
   const { userId } = await params;
   const getUserDetails = await getUsersById(userId);
-  console.log("->", getUserDetails?.user);
+
+  // console.log("from profile page--->",JSON.parse(JSON.stringify(getUserDetails?.user)))
 
   return (
     <>
