@@ -12,6 +12,7 @@ import {  UserRoundPen } from "lucide-react";
 const ProfileBio = ({ user }: { user: IUser }) => {
   const editModal = useEditModal();
   const currentUser = useSession();
+  // console.log("user -> ", user)
 
   
   return (

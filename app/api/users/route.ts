@@ -12,7 +12,8 @@ export async function GET(req: Request) {
         const limit = searchParams.get("limit");
         const userId = searchParams.get("userId")
 
-        // console.log("->",searchParams)
+        // console.log("limit---------->",limit)
+        // console.log("userId---------->",userId)
 
         const user = await User.find({
             _id: { $ne: userId }
