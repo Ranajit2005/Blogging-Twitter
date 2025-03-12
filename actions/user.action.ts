@@ -40,7 +40,6 @@ export const getUsersById = async (userId:string) => {
         }
 
         // console.log("--------------------",updatedData)
-
         return updatedData;
 
     } catch (error) {
@@ -49,7 +48,6 @@ export const getUsersById = async (userId:string) => {
     }
 
 }
-
 
 export const getCurrentUser = async () => {
 
