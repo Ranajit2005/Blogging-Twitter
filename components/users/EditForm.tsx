@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import EditModal from "./EditModal";
 // import { useSession } from "next-auth/react";
 
 const EditForm = ({ user }: { user: IUser }) => {
@@ -68,6 +69,9 @@ const EditForm = ({ user }: { user: IUser }) => {
 
   return (
     <Form {...form}>
+
+      {/* <EditModal user={user} /> */}
+
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 px-12">
         <FormField
           control={form.control}

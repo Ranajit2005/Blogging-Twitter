@@ -7,7 +7,7 @@ export async function PUT(req: Request) {
   try {
     await connectionDatabase();
     const { userId, currentUserId, isFollow } = await req.json();
-    // console.log("from follow route : ",userId,currentUserId)
+    console.log("from follow route : ",userId,currentUserId,isFollow)
 
     await User.findByIdAndUpdate(
       userId,
@@ -38,6 +38,39 @@ export async function PUT(req: Request) {
         success: true,
         message: `${isFollow? "Unfollow" : "Follow"}`,
     });
+
+  } catch (error) {
+    const result = error as Error;
+    return NextResponse.json(
+      {
+        error: result.message,
+      },
+      { status: 400 }
+    );
+  }
+}
+
+export async function GET(req: Request){
+  try {
+    await connectionDatabase();
+
+    const { searchParams } = new URL(req.url);
+    const state = searchParams.get("state");
+    const userId = searchParams.get("userId");
+    
+    const user = await User.findById(userId);
+
+    if(state == "following"){
+
+      const following = await User.find({_id: { $in: user?.following }})
+      return NextResponse.json(following);
+
+    }else if(state == "followers"){
+
+      const followers = await User.find({_id: { $in: user?.followers }})
+      return NextResponse.json(followers);
+
+    }
 
   } catch (error) {
     const result = error as Error;
