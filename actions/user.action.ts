@@ -35,7 +35,7 @@ export const getUsersById = async (userId:string) => {
                 ...data.user,
                 followers: data?.user.followers?.length || 0,
                 following: data?.user.following?.length || 0,
-                isFollowing: data?.user.followers?.includes(session?.currentUser?.[0]?._id) || false
+                isFollowing: data?.user.followers?.includes(session?.currentUser?.[0]?._id?.toString() ) || false
             }
         }
 

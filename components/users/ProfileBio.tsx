@@ -8,21 +8,41 @@ import { Button } from "../ui/button";
 import useEditModal from "@/hooks/useEditModal";
 import EditProfileModal from "../modals/EditProfileModal";
 import {  UserRoundPen } from "lucide-react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ProfileBio = ({ user }: { user: IUser }) => {
   const editModal = useEditModal();
   const currentUser = useSession();
+  const router = useRouter();
+
   const [isLoading,setLoading] = useState(false);
-  // console.log("user -> ", user)
 
-  const handleUnfollow = async () => {
 
+
+  // console.log("user -> ", user?._id )
+  // console.log("current user ---------> ",currentUser?.data?.currentUser?.[0]?._id)
+
+  const handleFollowUnfollow = async (isFollow:boolean) => {
+    try {
+
+      setLoading(true);
+
+      await axios.put('/api/follows',{
+        userId:user?._id,
+        currentUserId:currentUser?.data?.currentUser?.[0]?._id,
+        isFollow,
+      })
+
+      setLoading(false);
+      router.refresh();
+      
+    } catch (error) {
+
+      console.log("Follow error : ",error)
+      setLoading(false);
+    }
   }
-
-  const handlefollow = async () => {
-
-  }
-
   
   return (
     <>
@@ -41,29 +61,21 @@ const ProfileBio = ({ user }: { user: IUser }) => {
             >
               <UserRoundPen size={30} className="text-white "/>
             </Button>
-         ): user?.isFollowing ? (
+         ):  (
             <div className="absolute right-2  -bottom-16 sm:-bottom-20">
             <Button
-              onClick={handleUnfollow}
-              // className="bg-neutral-800 hover:bg-neutral-900"
-            >
-              Unfollow
-            </Button>
-            </div>
-         ) : (
-          <div className="absolute right-2  -bottom-16 sm:-bottom-20">
-
-          <Button
-              onClick={handlefollow}
+              onClick={()=>handleFollowUnfollow(user?.isFollowing)}
               // className="bg-neutral-800 hover:bg-neutral-900"
               disabled={isLoading}
             >
-              Follow
+              {user?.isFollowing ? "Unfollow" : "Follow"}
             </Button>
-            </div>
+            </div> 
 
          )}
         </div>
+
+        
       </div>
     </>
   );

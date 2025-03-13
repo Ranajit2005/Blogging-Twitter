@@ -8,7 +8,7 @@ export async function PUT(req: Request) {
   try {
     await connectionDatabase();
     const { postId, userId, isLike } = await req.json();
-    console.log("from likes route : ",userId, postId,isLike)
+    // console.log("from likes route : ",userId, postId,isLike)
 
     const post = await Post.findByIdAndUpdate(
       postId,
