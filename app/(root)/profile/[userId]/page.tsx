@@ -19,11 +19,12 @@ const ProfileUser = async ({
     <>
       <div className="flex justify-center items-center  pl-3 sm:pl-5">
         <CircleUserRound />
-        <Header title={`${getUserDetails?.user?.username}`} />
+        <Header title={`@${getUserDetails?.user?.username}`} />
       </div>
 
       <ProfileHero user={JSON.parse(JSON.stringify(getUserDetails?.user))} />
       <ProfileBio user={JSON.parse(JSON.stringify(getUserDetails?.user))} />
+      
     </>
   );
 };

@@ -83,9 +83,9 @@ const ProfileBio = ({ user }: { user: IUser }) => {
 
   }
 
-  const onFollowersFollowing = (item:any) => {
-    setState(item);
-  }
+  // const onFollowersFollowing = (item:any) => {
+  //   setState(item);
+  // }
 
   return (
     <>
