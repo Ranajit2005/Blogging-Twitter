@@ -124,15 +124,15 @@ const ProfileBio = ({ user }: { user: IUser }) => {
             </p>
           </div>
 
-          <p className="text-xs sm:text-md text-neutral-500">
+          {/* <p className="text-xs sm:text-md text-neutral-500">
             {user.username
               ? `@${sliceText(user.username, 16)}`
               : sliceText(user.email, 16)}
-          </p>
+          </p> */}
 
           <div className="flex flex-col mt-4">
             <p className="text-white">{user.bio}</p>
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-col items-start">
               {user.location && (
                 <div className="flex flex-row items-center gap-2 mt-4 text-sky-500">
                   <LocateFixed size={24} />

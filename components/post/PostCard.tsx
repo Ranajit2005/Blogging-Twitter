@@ -19,6 +19,10 @@ interface Props {
 }
 
 const PostCard = ({ posts, post, user, setPosts }: Props) => {
+
+  // console.log("From post card : ",posts,post,user,)
+
+
   const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
