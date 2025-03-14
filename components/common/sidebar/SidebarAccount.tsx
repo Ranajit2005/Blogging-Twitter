@@ -16,6 +16,8 @@ interface Props {
 
 const SidebarPostButton = (user:Props) => {
   const { data, status } = useSession();
+  const currentUser = useSession()
+  console.log("------------->",currentUser?.data?.currentUser?.[0]?.username?.[0]?.toUpperCase())
 
   if (status === "loading") {
     return (
@@ -30,7 +32,7 @@ const SidebarPostButton = (user:Props) => {
     return null; // or some fallback UI
   }
 
-  // console.log("The data image is : ",user?.user[0].name?.[0].toUpperCase())
+  // console.log("The data image is : ",user)
 
   return (
     <>
@@ -49,8 +51,8 @@ const SidebarPostButton = (user:Props) => {
           <div className="flex justify-between items-center">
             <div className="flex gap-2 items-center">
               <Avatar>
-                <AvatarImage src={user?.user[0]?.profilePhoto} />
-                <AvatarFallback>{user?.user[0].name?.[0].toUpperCase()}</AvatarFallback>
+                <AvatarImage src={currentUser?.data?.currentUser?.[0]?.profilePhoto} />
+                <AvatarFallback>{currentUser?.data?.currentUser?.[0]?.username?.[0]?.toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className=" hidden lg:block  items-start text-white">
                 <p>{data?.user?.name}</p>

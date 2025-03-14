@@ -8,7 +8,9 @@ import SidebarPostButton from "../common/sidebar/SidebarPostButton";
 import SidebarAccount from "../common/sidebar/SidebarAccount";
 
 const Sidebar = ({ user }: { user: IUser }) => {
-  const sidebarItems = sidebarItemsFunc(user);
+  const sidebarItems = sidebarItemsFunc(user?.currentUser?.[0]);
+
+  // console.log("-------------->",user?.currentUser?.[0]?._id)
 
   return (
     <section className="sticky left-0 top-0 h-screen lg:w-[266px] w-fit flex flex-col justify-between py-4 pl-2">

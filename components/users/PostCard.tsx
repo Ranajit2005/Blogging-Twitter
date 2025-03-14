@@ -19,8 +19,8 @@ interface Props {
 const PostCard = ({ posts, post, user, setPosts }: Props) => {
   const router = useRouter();
   const currentUser = useSession();
-  console.log("->",currentUser?.data?.currentUser?.[0]?._id)
-  console.log("--->",post?.user)
+//   console.log("->",currentUser?.data?.currentUser?.[0]?._id)
+//   console.log("--->",post?.user)
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [isLike, setIsLike] = useState(
