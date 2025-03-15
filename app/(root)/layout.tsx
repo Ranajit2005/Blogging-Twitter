@@ -29,7 +29,7 @@ const Homelayout = async ({ children }: Props) => {
     );
   }
 
-  console.log("users : ",session)
+  // console.log("users : ",session)
 
   return (
     <div className="lg:container h-screen mx-auto lg:max-w-7xl">

@@ -49,23 +49,7 @@ export async function GET(req: Request,route:{params:{userId:string}}) {
         await connectionDatabase();
 
         const { userId } = route.params;
-
-        // const { searchParams } = new URL(req.url);
-        // const currentUserId = searchParams.get("currentUserId");
-
-        // console.log("current user ------->",  currentUserId)
-
         const user = await User.findById(userId);
-
-        // const updatedUser = {
-        //   ...user,
-        //   followers: user.followers?.length || 0,
-        //   following: user.following?.length || 0,
-        //   isFollowing: user.followers?.includes(currentUserId) || false
-        // }
-
-        // console.log("updated user ----------->",updatedUser._doc?.following.length)
-        // console.log("updated user ----------->",updatedUser)
 
         const posts = await Post.find({
             user:user?._id

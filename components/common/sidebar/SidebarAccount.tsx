@@ -17,7 +17,7 @@ interface Props {
 const SidebarPostButton = (user:Props) => {
   const { data, status } = useSession();
   const currentUser = useSession()
-  console.log("------------->",currentUser?.data?.currentUser?.[0]?.username?.[0]?.toUpperCase())
+  // console.log("------------->",currentUser?.data?.currentUser?.[0]?.username?.[0]?.toUpperCase())
 
   if (status === "loading") {
     return (

@@ -29,7 +29,11 @@ export async function PUT(req: Request) {
 
         await User.findByIdAndUpdate(
         userId,
-            { $push: { notification: notification?._id, hasNewNotifications: true } },
+            { $push: { notification: notification?._id,
+              // hasNewNotifications: true
+            },
+            $set: {hasNewNotifications: true}
+          },
             { new: true }
           );
     } 

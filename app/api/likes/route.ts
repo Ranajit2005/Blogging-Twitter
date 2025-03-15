@@ -38,7 +38,12 @@ export async function PUT(req: Request) {
       });
       await User.findByIdAndUpdate(
         userWhoPost,
-        { $push: { notification: notification?._id, hasNewNotifications: true } },
+        { $push: { notification: notification?._id,
+          // hasNewNotifications: true
+        },
+        // hasNewNotifications: true
+        $set: {hasNewNotifications: true}
+      },
         { new: true }
       );
     }
