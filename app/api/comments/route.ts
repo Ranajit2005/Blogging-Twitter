@@ -34,3 +34,23 @@ export async function POST(req:Request) {
         
     }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    await connectionDatabase();
+    const { postId,commentId } = await req.json();
+    console.log(commentId, "commentId");
+
+    await Post.findByIdAndUpdate(postId,{
+        $pull: { comments : commentId },
+    },{ new : true })
+
+    await Comment.findByIdAndDelete(commentId);
+
+
+    return NextResponse.json({ message: "Comment deleted", success: true });
+  } catch (error) {
+    const result = error as Error;
+    return NextResponse.json({ error: result.message }, { status: 400 });
+  }
+}

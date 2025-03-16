@@ -60,6 +60,7 @@ const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) 
         }
 
         setPosts((prev)=> [newComment,...prev]);
+        router.refresh();
         
       } else {
         const { data } = await axios.post("/api/posts", {

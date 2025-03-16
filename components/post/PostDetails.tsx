@@ -52,20 +52,20 @@ const PostDetails = ({
                     {post?.user.name[0]}
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex flex-row items-center gap-2">
+                <div className="flex flex-row items-center gap-5">
                   <p className="text-white font-semibold cursor-pointer hover:underline">
                     {post?.user.name}
                   </p>
-                  <span className="text-neutral-500 cursor-pointer hover:underline hidden md:block">
+                  {/* <span className="text-neutral-500 cursor-pointer hover:underline hidden md:block">
                     {post && post?.user.username
                       ? `@${sliceText(post.user.username, 20)}`
                       : post && sliceText(post.user.email, 20)}
-                  </span>
-                  {/* <span className="text-neutral-500 text-sm">
+                  </span> */}
+                  <span className="text-neutral-500 text-sm">
                     {post &&
                       post.createdAt &&
                       formatDistanceToNowStrict(new Date(post.createdAt))}
-                  </span> */}
+                  </span>
                 </div>
               </div>
               <div>
@@ -100,10 +100,11 @@ const PostDetails = ({
                 user={JSON.parse(JSON.stringify(session))}
                 setComments={setComments}
                 comments={comments}
+                postId={postId}
               />
             ))
           ) : (
-            <p className="text-neutral-500 text-center mt-4">No comments yet!</p>
+            <p className="text-neutral-500 text-center my-3">No comments yet!</p>
           )}
         </>
       )}
