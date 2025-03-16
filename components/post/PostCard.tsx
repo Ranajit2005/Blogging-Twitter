@@ -115,6 +115,10 @@ const PostCard = ({ posts, post, user, setPosts }: Props) => {
 
   }
 
+  const handlePost = () => {
+    router.push(`/posts/${post._id}`)
+  }
+
   // console.log("form the post->", post)
 
   return (
@@ -156,8 +160,12 @@ const PostCard = ({ posts, post, user, setPosts }: Props) => {
       </div>
 
       <div>
-        <p className="text-white mt-1 text-xl">{post?.text}</p>
-        <div className="w-full h-80 max-h-96 mt-3">
+        <p className="text-white mt-1 text-xl"
+          onClick={handlePost}
+        >{post?.text}</p>
+        <div className="w-full h-80 max-h-96 mt-3"
+          onClick={handlePost}
+        >
           <img
             src={post?.image}
             alt={post?.text}

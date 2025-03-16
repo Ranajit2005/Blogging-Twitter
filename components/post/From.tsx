@@ -18,7 +18,7 @@ interface Props {
   setPosts: Dispatch<SetStateAction<IPost[]>>;
   postId?: string;
   isComment?: boolean;
-  posts: IPost[];
+  posts?: IPost[] | any;
 }
 
 const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) => {
@@ -35,13 +35,31 @@ const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) 
   if (!data?.user) {
     return null; // or some fallback UI
   }
-  // console.log("The data image is : ",data?.user?.image)
 
-  // console.log("->",user)
+  // const currentUser = useSession();
+  // console.log("---------->",currentUser)
+  // console.log("The data image is : ",data?.currentUser?.[0]?._id)
+
+  // console.log("------------->",user?.currentUser?.[0]?._id)
   const onSubmit = async () => {
     try {
       setIsLoading(true);
       if (isComment) {
+
+        const { data } = await axios.post("/api/comments",{
+          text,
+          userId:user?.currentUser?.[0]?._id,
+          postId
+        })
+
+        const newComment = {
+          ...data,
+          user,
+          likes: 0,
+          hasLikes: false,
+        }
+
+        setPosts((prev)=> [newComment,...prev]);
         
       } else {
         const { data } = await axios.post("/api/posts", {
@@ -98,6 +116,8 @@ const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) 
   //   }
 
   // }
+
+  // console.log("data",data)
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
