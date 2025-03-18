@@ -96,6 +96,7 @@ const From = ({ placeholder, user, setPosts, postId, isComment, posts }: Props) 
       setText("");
       // router.refresh();
     } catch (error) {
+      console.log("From error : ",error)
       setIsLoading(false);
 
       toast({
