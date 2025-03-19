@@ -37,7 +37,8 @@ export const authOptions : AuthOptions = {
 
             await connectionDatabase();
 
-            const isExistingUser = await User.find({email:session?.user?.email,
+            const isExistingUser = await User.find({
+                email:session?.user?.email
             });
 
             if(!isExistingUser){
