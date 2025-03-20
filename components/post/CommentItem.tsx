@@ -1,18 +1,17 @@
 "use client";
 
 import { IPost, IUser } from "@/types";
-import { Heart, Loader2, Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { sliceText } from "@/lib/utils";
 import { formatDistanceToNowStrict } from "date-fns";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { toast } from "@/hooks/use-toast";
 
 interface Props {
   comment: IPost;
-  // key:string,
   user: IUser;
   setComments: Dispatch<SetStateAction<IPost[]>>;
   comments: IPost[];
@@ -48,19 +47,16 @@ const CommentItem = ({
       router.refresh();
       setIsLoading(false);
 
-      // router.refresh();
-      // return toast({
-      //   title: "Success",
-      //   description: data.message,
-      //   variant: "default",
-      // });
+      return toast({
+        title: "Comment is deleted",
+        // description: "Comment is deleted",
+        variant: "default",
+      });
     } catch (error) {
       console.log(error);
       setIsLoading(false);
     }
   };
-
-  // console.log("From comment : ",comments)
 
   return (
     <div className="border-b-[1px] relative border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition">
@@ -78,7 +74,7 @@ const CommentItem = ({
             className="flex gap-3 items-center justify-center"
             onClick={goToProfile}
           >
-            <Avatar onClick={goToProfile}>
+            <Avatar>
               <AvatarImage src={comment?.user.profilePhoto} />
               <AvatarFallback className="capitalize">
                 {comment?.user.name?.[0]}
