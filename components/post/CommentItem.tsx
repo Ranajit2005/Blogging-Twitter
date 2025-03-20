@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { IPost, IUser } from "@/types";
 import { Heart, Loader2, Trash2 } from "lucide-react";
@@ -16,56 +16,51 @@ interface Props {
   user: IUser;
   setComments: Dispatch<SetStateAction<IPost[]>>;
   comments: IPost[];
-  postId:string;
+  postId: string;
 }
 
-const CommentItem = ({ comment, user, setComments, comments,postId }: Props) => {
+const CommentItem = ({
+  comment,
+  user,
+  setComments,
+  comments,
+  postId,
+}: Props) => {
+  const router = useRouter();
+  const currentUser = useSession();
+  const [isLoading, setIsLoading] = useState(false);
 
-    const router = useRouter();
-    const currentUser = useSession();
-    const [isLoading, setIsLoading] = useState(false);
+  const goToProfile = (event: any) => {
+    event.stopPropagation();
+    router.push(`/profile/${user._id}`);
+  };
 
-    const goToProfile = (event: any) => {
-        event.stopPropagation();
-        router.push(`/profile/${user._id}`);
-    };
+  const onDelete = async () => {
+    try {
+      setIsLoading(true);
+      await axios.delete(`/api/comments`, {
+        data: {
+          postId,
+          commentId: comment?._id,
+        },
+      });
+      setComments(comments.filter((item) => item._id != comment?._id));
+      router.refresh();
+      setIsLoading(false);
 
-    const onDelete = async () => {
-        try {
-            setIsLoading(true);
-            await axios.delete(`/api/comments`,{
-                data : {
-                    postId,
-                    commentId:comment?._id
-                }
-            });
-            setComments(comments.filter((item) => item._id != comment?._id));
-            router.refresh();
-            setIsLoading(false);
+      // router.refresh();
+      // return toast({
+      //   title: "Success",
+      //   description: data.message,
+      //   variant: "default",
+      // });
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
 
-
-        // router.refresh();
-        // return toast({
-        //   title: "Success",
-        //   description: data.message,
-        //   variant: "default",
-        // });
-
-          
-        } catch (error) {
-          console.log(error);
-          setIsLoading(false);
-        }
-    };
-
-
-
-
-
-
-
-
-    console.log("From comment : ",comments)
+  // console.log("From comment : ",comments)
 
   return (
     <div className="border-b-[1px] relative border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition">
@@ -76,44 +71,38 @@ const CommentItem = ({ comment, user, setComments, comments,postId }: Props) => 
           </div>
         </div>
       )}
-      <div className="flex flex-row items-center gap-3">
-        <Avatar onClick={goToProfile}>
-          <AvatarImage src={comment?.user.profilePhoto} />
-          <AvatarFallback className="capitalize">
-            {comment?.user.name?.[0]}
-          </AvatarFallback>
-        </Avatar>
 
-        <div>
+      <div className="flex flex-col">
+        <div className="w-full flex items-center justify-between">
           <div
-            className="flex flex-row items-center gap-5"
+            className="flex gap-3 items-center justify-center"
             onClick={goToProfile}
           >
+            <Avatar onClick={goToProfile}>
+              <AvatarImage src={comment?.user.profilePhoto} />
+              <AvatarFallback className="capitalize">
+                {comment?.user.name?.[0]}
+              </AvatarFallback>
+            </Avatar>
+
             <p className="text-white font-semibold cursor-pointer hover:underline">
               {comment?.user.name}
             </p>
-            {/* <span className="text-neutral-500 cursor-pointer hover:underline hidden md:block">
-              {comment && comment?.user?.username
-                ? `@${sliceText(comment.user.username, 20)}`
-                : comment && sliceText(comment.user.email, 20)}
-            </span> */}
-            <span className="text-neutral-500 text-sm">
-              {comment &&
-                comment.createdAt &&
-                formatDistanceToNowStrict(new Date(comment.createdAt))} ago
-            </span>
           </div>
-          <div className="text-white mt-1">{comment?.text}</div>
 
+          <span className="text-neutral-500 text-sm">
+            {comment &&
+              comment.createdAt &&
+              formatDistanceToNowStrict(new Date(comment.createdAt))}{" "}
+            ago
+          </span>
+        </div>
+
+        <div className="w-full flex items-center justify-between">
+          <div className="text-white ml-[51px] ">{comment?.text}</div>
           <div className="flex flex-row items-center mt-3 gap-10">
-            {/* <div
-              className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
-            >
-              <Heart size={20} color={comment.hasLiked ? "red" : ""} />
-              <p>{comment.likes || 0}</p>
-            </div> */}
-
-            {comment?.user?._id === currentUser?.data?.currentUser?.[0]?._id && (
+            {comment?.user?._id ===
+              currentUser?.data?.currentUser?.[0]?._id && (
               <div
                 className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
                 onClick={onDelete}

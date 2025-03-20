@@ -52,19 +52,15 @@ const PostDetails = ({
                     {post?.user.name[0]}
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex flex-row items-center gap-5">
+                <div className="w-full flex flex-row items-center gap-5 justify-between">
                   <p className="text-white font-semibold cursor-pointer hover:underline">
                     {post?.user.name}
                   </p>
-                  {/* <span className="text-neutral-500 cursor-pointer hover:underline hidden md:block">
-                    {post && post?.user.username
-                      ? `@${sliceText(post.user.username, 20)}`
-                      : post && sliceText(post.user.email, 20)}
-                  </span> */}
+                  
                   <span className="text-neutral-500 text-sm">
                     {post &&
                       post.createdAt &&
-                      formatDistanceToNowStrict(new Date(post.createdAt))}
+                      formatDistanceToNowStrict(new Date(post.createdAt))} ago
                   </span>
                 </div>
               </div>
