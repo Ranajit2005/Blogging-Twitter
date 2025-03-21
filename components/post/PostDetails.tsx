@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../common/Header";
 import { Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { sliceText } from "@/lib/utils";
 import { formatDistanceToNowStrict } from "date-fns";
 import CommentItem from "./CommentItem";
 import From from "./From"

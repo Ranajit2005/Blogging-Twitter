@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import EditModal from "./EditModal";
+// import EditModal from "./EditModal";
 // import { useSession } from "next-auth/react";
 
 const EditForm = ({ user }: { user: IUser }) => {
