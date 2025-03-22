@@ -17,16 +17,12 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-// import EditModal from "./EditModal";
-// import { useSession } from "next-auth/react";
+
 
 const EditForm = ({ user }: { user: IUser }) => {
   const editModal = useEditModal();
   const router = useRouter();
   const { toast } = useToast();
-  // const currentUser = useSession();
-
-  // console.log("->",currentUser?.data?.currentUser?.[0]?._id)
 
   const form = useForm<z.infer<typeof userSchema>>({
     resolver: zodResolver(userSchema),
