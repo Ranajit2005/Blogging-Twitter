@@ -1,4 +1,3 @@
-import { getAuthOptions } from "@/lib/authOptions";
 import { connectionDatabase } from "@/lib/connection";
 import Comment from "@/models/comment.model";
 import Post from "@/models/post.model";
