@@ -9,8 +9,6 @@ export async function GET(req: Request, route: { params: { postId: string } }) {
     await connectionDatabase();
     const { postId } = await route.params;
 
-    // const session = await getAuthOptions();
-    // const user = session?.user;
     const post = await Post.findById(postId)
       .populate("user")
       .populate({
